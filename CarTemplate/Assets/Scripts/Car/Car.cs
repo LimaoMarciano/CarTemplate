@@ -74,7 +74,7 @@ public class Car : MonoBehaviour
         transmission.ApplyTorque(engineTorque);
         transmission.ApplyEngineBrake(1000.0f, engineRpm, engine.maxRpm);
 
-        Debug.Log((speed - CalculateWheelSpeed(drivenWheels[0])) * 3.6f);
+        //Debug.Log((speed - CalculateWheelSpeed(drivenWheels[0])) * 3.6f);
 
     }
 

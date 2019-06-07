@@ -45,7 +45,8 @@ public class Transmission
             wheelRpm += wheel.rpm;
         }
 
-        wheelRpm /= drivenWheels.Count;
+        if (drivenWheels.Count != 0)
+            wheelRpm /= drivenWheels.Count;
 
         if (gearRatios.Count != 0)
         {

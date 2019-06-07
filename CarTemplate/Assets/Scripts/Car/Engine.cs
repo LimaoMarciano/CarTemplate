@@ -6,19 +6,19 @@ public class Engine
 {
 
     //public EngineData data;
-    public AnimationCurve torqueCurve;
+    public AnimationCurve powerCurve;
     public float maxRpm = 7000.0f;
     public float minRpm = 1000.0f;
-    public float peakTorque = 150.0f;
+    public float peakPower = 150.0f;
 
     private float acceleratorInput = 0.0f;
     
     public Engine (EngineData data)
     {
-        torqueCurve = data.torqueCurve;
+        powerCurve = data.torqueCurve;
         maxRpm = data.maxRpm;
         minRpm = data.minRpm;
-        peakTorque = data.peakTorque;
+        peakPower = data.peakPower;
     }
 
     public void SetAcceleratorInput(float accelerator)
@@ -29,8 +29,13 @@ public class Engine
     public float GetTorqueFromRpm (float rpm)
     {
 
+        
         float t = Mathf.Clamp(rpm, minRpm, maxRpm) / maxRpm;
-        float torque = peakTorque * torqueCurve.Evaluate(t);
+        
+        float power = peakPower * powerCurve.Evaluate(t);
+        float torque = (9.5488f * power * 1000) / Mathf.Clamp(rpm,minRpm, maxRpm);
+
+        Debug.Log("Torque: " + torque);
 
         return torque * acceleratorInput;
 
