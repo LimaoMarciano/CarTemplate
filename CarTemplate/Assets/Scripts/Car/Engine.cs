@@ -28,14 +28,11 @@ public class Engine
 
     public float GetTorqueFromRpm (float rpm)
     {
-
         
         float t = Mathf.Clamp(rpm, minRpm, maxRpm) / maxRpm;
         
         float power = peakPower * powerCurve.Evaluate(t);
         float torque = (9.5488f * power * 1000) / Mathf.Clamp(rpm,minRpm, maxRpm);
-
-        Debug.Log("Torque: " + torque);
 
         return torque * acceleratorInput;
 

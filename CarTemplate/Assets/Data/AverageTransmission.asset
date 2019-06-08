@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: def056b7264ba1748b51d9334db8e4f6, type: 3}
-  m_Name: CorveteTransmission
+  m_Name: AverageTransmission
   m_EditorClassIdentifier: 
   gearRatios:
   - 0
-  - 2.66
-  - 1.78
-  - 1.3
+  - 3.45
+  - 1.9
+  - 1.37
   - 1
-  - 0.7
-  - 0.5
-  finalGear: 3.42
+  - 0.85
+  finalGear: 3.9

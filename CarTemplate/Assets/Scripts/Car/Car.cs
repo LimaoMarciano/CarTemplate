@@ -15,6 +15,7 @@ public class Car : MonoBehaviour
     private float engineTorque;
     private float engineRpm;
     private float speed;
+    private float tyreSlip;
     private int currentGear;
 
     public float EngineTorque
@@ -30,6 +31,11 @@ public class Car : MonoBehaviour
     public float Speed
     {
         get { return speed; }
+    }
+
+    public float TyreSlip
+    {
+        get { return tyreSlip; }
     }
 
     public int CurrentGear
@@ -74,7 +80,7 @@ public class Car : MonoBehaviour
         transmission.ApplyTorque(engineTorque);
         transmission.ApplyEngineBrake(1000.0f, engineRpm, engine.maxRpm);
 
-        //Debug.Log((speed - CalculateWheelSpeed(drivenWheels[0])) * 3.6f);
+        tyreSlip = (CalculateWheelSpeed(drivenWheels[0]) - speed) * 3.6f;
 
     }
 

@@ -213,8 +213,8 @@ MonoBehaviour:
   gear: {fileID: 3059197677260978792}
   minNeedle: 120
   maxNeedle: -120
-  maxRpm: 7000
-  redlineRpm: 6000
+  maxRpm: 6000
+  redlineRpm: 4800
   rpm: 0
   currentSpeed: 0
   currentGear: 0
