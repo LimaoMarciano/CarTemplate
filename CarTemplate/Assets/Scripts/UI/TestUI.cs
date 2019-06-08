@@ -18,7 +18,7 @@ public class TestUI : MonoBehaviour
         powerMeter.SetMaxValue(1000.0f);
         powerMeter.SetLabel("Engine Torque");
 
-        tyreSlipMeter.SetMaxValue(50f);
+        tyreSlipMeter.SetMaxValue(1f);
         tyreSlipMeter.SetLabel("Tyre slip");
     }
 

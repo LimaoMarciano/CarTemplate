@@ -80,8 +80,13 @@ public class Car : MonoBehaviour
         transmission.ApplyTorque(engineTorque);
         transmission.ApplyEngineBrake(1000.0f, engineRpm, engine.maxRpm);
 
-        tyreSlip = (CalculateWheelSpeed(drivenWheels[0]) - speed) * 3.6f;
+        //tyreSlip = (CalculateWheelSpeed(drivenWheels[0]) - speed) * 3.6f;
 
+    }
+
+    private void FixedUpdate()
+    {
+        tyreSlip = getTyreSlip(drivenWheels[0]);
     }
 
     private void OnDrawGizmos()
@@ -115,5 +120,18 @@ public class Car : MonoBehaviour
         Debug.DrawLine(new Vector3(pos.x + halfSize, pos.y, pos.z), new Vector3(pos.x - halfSize, pos.y, pos.z), color);
         Debug.DrawLine(new Vector3(pos.x, pos.y + halfSize, pos.z), new Vector3(pos.x, pos.y - halfSize, pos.z), color);
         Debug.DrawLine(new Vector3(pos.x, pos.y, pos.z + halfSize), new Vector3(pos.x, pos.y, pos.z - halfSize), color);
+    }
+
+    float getTyreSlip (WheelCollider wheel)
+    {
+        WheelHit hit = new WheelHit();
+        if (wheel.GetGroundHit(out hit))
+        {
+            return hit.forwardSlip;
+        }
+        else
+        {
+            return 0f;
+        }
     }
 }
