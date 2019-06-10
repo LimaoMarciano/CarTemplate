@@ -27,7 +27,7 @@ public class TestUI : MonoBehaviour
     {
         speedometer.currentSpeed = car.Speed;
         speedometer.currentGear = car.CurrentGear;
-        speedometer.rpm = car.EngineRpm;
+        speedometer.rpm = car.Engine.EngineRpm;
 
         powerMeter.value = car.EngineTorque;
 
