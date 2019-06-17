@@ -789,6 +789,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1931247588404958475, guid: b28f6b0072710a049982be91dc922c16,
+        type: 3}
+      propertyPath: isFractional
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b28f6b0072710a049982be91dc922c16, type: 3}
 --- !u!1001 &3059197676385268275
@@ -932,6 +937,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car
       objectReference: {fileID: 0}
+    - target: {fileID: 5591365892030866203, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: engineData
+      value: 
+      objectReference: {fileID: 11400000, guid: ca8d08c5cc751bf4d9ffb9b9d41a9ed0,
+        type: 2}
+    - target: {fileID: 5591365892030866203, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: transmissionData
+      value: 
+      objectReference: {fileID: 11400000, guid: 804fd39626a393742ab7a48d3e8d6d52,
+        type: 2}
     - target: {fileID: 640128424517247998, guid: 8038886399aeb6c4bb8ad12fe54e3282,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -986,6 +1003,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365892294384979, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365892294384979, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_AsymptoteSlip
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365893413606184, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365893413606184, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_AsymptoteSlip
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365892648504926, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365892648504926, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_AsymptoteSlip
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365893762187638, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_ExtremumSlip
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591365893762187638, guid: 8038886399aeb6c4bb8ad12fe54e3282,
+        type: 3}
+      propertyPath: m_ForwardFriction.m_AsymptoteSlip
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8038886399aeb6c4bb8ad12fe54e3282, type: 3}

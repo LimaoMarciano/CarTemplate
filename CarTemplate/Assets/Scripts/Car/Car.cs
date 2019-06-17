@@ -12,11 +12,14 @@ public class Car : MonoBehaviour
 
     private Engine engine;
     private Transmission transmission;
+    private Clutch clutch;
     private float engineTorque;
     private float engineRpm;
     private float speed;
     private float tyreSlip;
     private int currentGear;
+
+    private IEnumerator changeGearCoroutine;
 
     public Engine Engine
     {
@@ -53,10 +56,13 @@ public class Car : MonoBehaviour
     {
         engine = new Engine(engineData);
         transmission = new Transmission(transmissionData);
+        clutch = new Clutch();
 
         transmission.drivenWheels = drivenWheels;
 
         rb.centerOfMass = centerOfMass;
+
+        changeGearCoroutine = ChangeGear();
     }
 
     // Update is called once per frame
@@ -68,28 +74,46 @@ public class Car : MonoBehaviour
         //speed = CalculateWheelSpeed(drivenWheels[0]);
         speed = rb.velocity.magnitude;
 
-        currentGear = transmission.CurrentGear;
+        
+        
 
         if (Input.GetButtonDown("Fire1"))
         {
             transmission.IncreaseGear();
+            StopCoroutine(changeGearCoroutine);    
+            StartCoroutine(changeGearCoroutine);
         }
 
         if (Input.GetButtonDown("Fire3"))
         {
             transmission.DecreaseGear();
+            StopCoroutine(changeGearCoroutine);
+            StartCoroutine(changeGearCoroutine);
+
         }
 
-        
-        engine.InputRpm(transmission.GetTransmissionRpm());
+        currentGear = transmission.CurrentGear;
+
+        if (currentGear == 0)
+        {
+            engine.isEngaged = false;
+        }
+        else
+        {
+            engine.isEngaged = true;
+        }
+
+        clutch.SetInputRpm(transmission.GetTransmissionRpm());
+        engine.SetInputRpm(clutch.GetClutchRpmOutput());
         engine.EngineUpdate();
-        transmission.ApplyTorque(engine.OutputTorque);
+        clutch.SetInputTorque(engine.OutputTorque);
+        transmission.ApplyTorque(clutch.GetClutchTorque());
         //engineRpm = transmission.GetTransmissionRpm();
         //engineTorque = engine.GetTorqueFromRpm(engineRpm);
         //transmission.ApplyTorque(engineTorque);
-        transmission.ApplyEngineBrake(1000.0f, engineRpm, engine.maxRpm);
+        //transmission.ApplyEngineBrake(1000.0f, engine.EngineRpm, engine.maxRpm);
 
-        tyreSlip = (CalculateWheelSpeed(drivenWheels[0]) - speed) * 3.6f;
+        //tyreSlip = (CalculateWheelSpeed(drivenWheels[0]) - speed) * 3.6f;
 
     }
 
@@ -142,5 +166,30 @@ public class Car : MonoBehaviour
         {
             return 0f;
         }
+    }
+
+    float getTyreForce (WheelCollider wheel)
+    {
+        WheelHit hit = new WheelHit();
+        if (wheel.GetGroundHit(out hit))
+        {
+            return hit.force;
+        }
+        else
+        {
+            return 0f;
+        }
+    }
+
+    IEnumerator ChangeGear ()
+    {
+
+        for (float clutchInput = 0f; clutchInput < 1; clutchInput += 1 * Time.deltaTime )
+        {
+            engine.transmissionConnection = clutchInput;
+            clutch.SetClutchInput(clutchInput);
+            yield return null;
+        }
+        
     }
 }
