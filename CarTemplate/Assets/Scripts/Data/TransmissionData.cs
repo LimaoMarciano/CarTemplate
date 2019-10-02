@@ -8,3 +8,4 @@ public class TransmissionData : ScriptableObject
     public List<float> gearRatios;
     public float finalGear;
 }
+
