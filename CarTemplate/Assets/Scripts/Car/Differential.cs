@@ -20,7 +20,7 @@ namespace CarTemplate
 
             outputRPM = averageRPM;
 
-            SendRPMOutput();
+            SendOutputRPM();
         }
 
         protected override void ProcessTorque()

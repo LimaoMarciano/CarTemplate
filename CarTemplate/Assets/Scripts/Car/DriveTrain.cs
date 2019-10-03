@@ -9,8 +9,8 @@ namespace CarTemplate
     /// </summary>
     public class DriveTrain
     {
-        public DriveTrain input;
-        public DriveTrain output;
+        public DriveTrain rpmOutput;
+        public DriveTrain torqueOutput;
 
         protected float inputTorque = 0;
         protected float outputTorque = 0;
@@ -56,9 +56,9 @@ namespace CarTemplate
         /// </summary>
         protected void GetRPMInput ()
         {
-            if (input != null)
+            if (rpmOutput != null)
             {
-                InputRPM = input.OutputRPM;
+                InputRPM = rpmOutput.OutputRPM;
             }
             else
             {
@@ -69,11 +69,11 @@ namespace CarTemplate
         /// <summary>
         /// Sends processed RPM to connected output drive train part
         /// </summary>
-        protected void SendRPMOutput ()
+        protected void SendOutputRPM ()
         {
-            if (output != null)
+            if (rpmOutput != null)
             {
-                output.InputRPM = OutputRPM;
+                rpmOutput.InputRPM = OutputRPM;
             }
             else
             {
@@ -86,9 +86,9 @@ namespace CarTemplate
         /// </summary>
         protected void GetTorqueInput ()
         {
-            if (input != null)
+            if (rpmOutput != null)
             {
-                InputTorque = input.OutputTorque;
+                InputTorque = rpmOutput.OutputTorque;
             }
             else
             {
@@ -101,9 +101,9 @@ namespace CarTemplate
         /// </summary>
         protected void SendOutputTorque ()
         {
-            if (output != null)
+            if (torqueOutput != null)
             {
-                output.InputTorque = OutputTorque;
+                torqueOutput.InputTorque = OutputTorque;
             }
             else
             {
@@ -114,7 +114,7 @@ namespace CarTemplate
         protected virtual void ProcessRPM()
         {
             outputRPM = inputRPM;
-            SendOutputTorque();
+            SendOutputRPM();
         }
 
         protected virtual void ProcessTorque()

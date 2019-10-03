@@ -16,7 +16,7 @@ namespace ProtoCar
             get { return currentGear; }
         }
 
-        public Transmission(TransmissionData data)
+        public Transmission(GearboxData data)
         {
             gearRatios = data.gearRatios;
             finalGear = data.finalGear;

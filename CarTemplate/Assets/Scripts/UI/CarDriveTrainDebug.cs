@@ -16,9 +16,14 @@ public class CarDriveTrainDebug : MonoBehaviour
         engine.driveTrain = car.engine;
         engine.panelLabel = "Engine";
 
+        DriveTrainDebug gearbox = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
+        gearbox.driveTrain = car.gearbox;
+        gearbox.panelLabel = "Gearbox";
+
         DriveTrainDebug differential = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
         differential.driveTrain = car.differential;
         differential.panelLabel = "Differential";
+
     }
 
     // Update is called once per frame
@@ -26,4 +31,6 @@ public class CarDriveTrainDebug : MonoBehaviour
     {
         
     }
+
+
 }

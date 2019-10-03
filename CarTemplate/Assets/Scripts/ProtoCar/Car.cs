@@ -8,7 +8,7 @@ namespace ProtoCar
     public class Car : MonoBehaviour
     {
         public EngineData engineData;
-        public TransmissionData transmissionData;
+        public GearboxData transmissionData;
         public List<WheelCollider> drivenWheels;
         public Vector3 centerOfMass;
         public Rigidbody rb;
