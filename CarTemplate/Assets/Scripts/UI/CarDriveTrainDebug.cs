@@ -16,6 +16,10 @@ public class CarDriveTrainDebug : MonoBehaviour
         engine.driveTrain = car.engine;
         engine.panelLabel = "Engine";
 
+        DriveTrainDebug clutch = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
+        clutch.driveTrain = car.clutch;
+        clutch.panelLabel = "Clutch";
+
         DriveTrainDebug gearbox = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
         gearbox.driveTrain = car.gearbox;
         gearbox.panelLabel = "Gearbox";

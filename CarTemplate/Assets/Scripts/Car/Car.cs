@@ -13,6 +13,7 @@ namespace CarTemplate
         public Engine engine = new Engine();
         public Differential differential = new Differential();
         public Gearbox gearbox = new Gearbox();
+        public Clutch clutch = new Clutch();
 
 
         // Start is called before the first frame update
@@ -22,11 +23,14 @@ namespace CarTemplate
             gearbox.data = gearboxData;
             differential.wheels = drivenWheels;
 
-            engine.torqueOutput = gearbox;
-            engine.rpmOutput = gearbox;
+            engine.torqueOutput = clutch;
+            engine.rpmOutput = clutch;
+
+            clutch.torqueOutput = gearbox;
+            clutch.rpmOutput = engine;
 
             gearbox.torqueOutput = differential;
-            gearbox.rpmOutput = engine;
+            gearbox.rpmOutput = clutch;
 
             //differential.torqueOutput = gearbox;
             differential.rpmOutput = gearbox;
@@ -57,6 +61,9 @@ namespace CarTemplate
                 //StartCoroutine(changeGearCoroutine);
 
             }
+
+            float triggerTest = Input.GetAxis("RightTrigger");
+            clutch.clutchInput = triggerTest;
 
             differential.Update();
             
