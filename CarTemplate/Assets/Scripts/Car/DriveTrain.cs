@@ -9,118 +9,75 @@ namespace CarTemplate
     /// </summary>
     public class DriveTrain
     {
-        public DriveTrain rpmOutput;
-        public DriveTrain torqueOutput;
+        public DriveTrain rpmOutputDriveTrain;
+        public DriveTrain torqueOutputDriveTrain;
 
-        protected float inputTorque = 0;
-        protected float outputTorque = 0;
-        protected float outputRPM = 0;
-        protected float inputRPM = 0;
+        protected TransmittedRpm inputRpm;
+        protected TransmittedTorque inputTorque;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public float InputTorque
+        public TransmittedRpm InputRpm
         {
-            set {
-                inputTorque = value;
-                ProcessTorque();
-            }
+            get { return inputRpm; }
+        }
+
+        public TransmittedTorque InputTorque
+        {
             get { return inputTorque; }
         }
 
-        public float InputRPM
-        {
-            set {
-                inputRPM = value;
-                ProcessRPM();
-            }
-            get { return inputRPM; }
-        }
-
-        public float OutputTorque
-        {
-            get { return outputTorque; }
-        }
-
-        public float OutputRPM
-        {
-            get { return outputRPM; }
-        }
 
         //Methods
         /*=======================================================================================*/
 
+
         /// <summary>
-        /// Force receiving processed RPM from input drive train part
+        /// Set rpm input and calls ProcessInputRpm method
         /// </summary>
-        protected void GetRPMInput ()
+        public void SetInputRpm (TransmittedRpm rpm)
         {
-            if (rpmOutput != null)
-            {
-                InputRPM = rpmOutput.OutputRPM;
-            }
-            else
-            {
-                Debug.LogWarning("No output connected");
-            }
+            inputRpm = rpm;
+            ProcessInputRpm();
         }
 
         /// <summary>
-        /// Sends processed RPM to connected output drive train part
+        /// Set torque input and calls ProcessTorqueRpm method
         /// </summary>
-        protected void SendOutputRPM ()
+        public void SetInputTorque (TransmittedTorque torque)
         {
-            if (rpmOutput != null)
-            {
-                rpmOutput.InputRPM = OutputRPM;
-            }
-            else
-            {
-                Debug.LogWarning("No input connected");
-            }
+            inputTorque = torque;
+            ProcessInputTorque();
         }
 
         /// <summary>
-        /// Force receiving processed torque from connected input drive train part
+        /// Method called when rpm input is set. This method can be overriden to create the drive train part behaviour when receiving RPM from another part.
+        /// Default behaviour is to just bypass RPM to the rpmOutputDriveTrain.
         /// </summary>
-        protected void GetTorqueInput ()
+        protected virtual void ProcessInputRpm()
         {
-            if (rpmOutput != null)
+            if (rpmOutputDriveTrain != null)
             {
-                InputTorque = rpmOutput.OutputTorque;
+                rpmOutputDriveTrain.SetInputRpm(inputRpm);
             }
             else
             {
-                Debug.LogWarning("No output connected");
+                Debug.LogWarning("No drive train part connected to rpm output");
             }
         }
 
         /// <summary>
-        /// Sends processed torque to connected output drive train part
+        /// Method called when torque input is set. This method can be overriden to create the drive train part behaviour when receiving torque from another part.
+        /// Default behaviour is to just bypass torque to the torqueOutputDriveTrain.
         /// </summary>
-        protected void SendOutputTorque ()
+        protected virtual void ProcessInputTorque()
         {
-            if (torqueOutput != null)
+            if (rpmOutputDriveTrain != null)
             {
-                torqueOutput.InputTorque = OutputTorque;
+                rpmOutputDriveTrain.SetInputTorque(inputTorque);
             }
             else
             {
-                Debug.LogWarning("No input connected");
+                Debug.LogWarning("No drive train part connected to torque output");
             }
-        }
-
-        protected virtual void ProcessRPM()
-        {
-            outputRPM = inputRPM;
-            SendOutputRPM();
-        }
-
-        protected virtual void ProcessTorque()
-        {
-            outputTorque = inputTorque;
-            SendOutputTorque();
         }
 
     }

@@ -8,26 +8,28 @@ namespace CarTemplate
     {
         public WheelCollider[] wheels;
 
+        private TransmittedRpm outputRpm = new TransmittedRpm(0f);
+
         public void Update()
         {
 
-            float totalWheelsRPM = 0;
+            float totalWheelsRpm = 0;
             for (int i = 0; i < wheels.Length; i++)
             {
-                totalWheelsRPM += wheels[i].rpm;
+                totalWheelsRpm += wheels[i].rpm;
             }
-            float averageRPM = totalWheelsRPM / wheels.Length;
+            float averageRpm = totalWheelsRpm / wheels.Length;
 
-            outputRPM = averageRPM;
+            outputRpm.rpm = averageRpm;
 
-            SendOutputRPM();
+            rpmOutputDriveTrain.SetInputRpm(outputRpm);
         }
 
-        protected override void ProcessTorque()
+        protected override void ProcessInputTorque()
         {
             for (int i = 0; i < wheels.Length; i++)
             {
-                wheels[i].motorTorque = inputTorque / wheels.Length;
+                wheels[i].motorTorque = inputTorque.torque / wheels.Length;
             }
         }
     }

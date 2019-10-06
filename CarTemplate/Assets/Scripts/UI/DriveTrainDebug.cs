@@ -23,9 +23,9 @@ public class DriveTrainDebug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        inputRPM.text = "RPM: " + driveTrain.InputRPM.ToString("F1");
-        inputTorque.text = "Torque: " + driveTrain.InputTorque.ToString("F1");
-        outputRPM.text = "RPM: " + driveTrain.OutputRPM.ToString("F1");
-        outputTorque.text = "Torque: " + driveTrain.OutputTorque.ToString("F1");
+        inputRPM.text = "RPM: " + driveTrain.InputRpm.rpm.ToString("F1");
+        inputTorque.text = "Torque: " + driveTrain.InputTorque.torque.ToString("F1");
+        //outputRPM.text = "RPM: " + driveTrain.OutputRPM.ToString("F1");
+        //outputTorque.text = "Torque: " + driveTrain.OutputTorque.ToString("F1");
     }
 }

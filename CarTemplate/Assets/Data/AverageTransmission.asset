@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gearRatios:
   - 0
-  - 3.45
+  - 3.1
   - 1.9
   - 1.37
   - 1
   - 0.85
-  finalGear: 3.9
+  finalGear: 3.5

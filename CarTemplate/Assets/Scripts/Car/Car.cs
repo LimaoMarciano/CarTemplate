@@ -9,6 +9,7 @@ namespace CarTemplate
         public EngineData engineData;
         public GearboxData gearboxData;
         public WheelCollider[] drivenWheels;
+        public float speed = 0f;
 
         public Engine engine = new Engine();
         public Differential differential = new Differential();
@@ -23,17 +24,17 @@ namespace CarTemplate
             gearbox.data = gearboxData;
             differential.wheels = drivenWheels;
 
-            engine.torqueOutput = clutch;
-            engine.rpmOutput = clutch;
+            engine.torqueOutputDriveTrain = clutch;
+            engine.rpmOutputDriveTrain = clutch;
 
-            clutch.torqueOutput = gearbox;
-            clutch.rpmOutput = engine;
+            clutch.torqueOutputDriveTrain = gearbox;
+            clutch.rpmOutputDriveTrain = engine;
 
-            gearbox.torqueOutput = differential;
-            gearbox.rpmOutput = clutch;
+            gearbox.torqueOutputDriveTrain = differential;
+            gearbox.rpmOutputDriveTrain = clutch;
 
             //differential.torqueOutput = gearbox;
-            differential.rpmOutput = gearbox;
+            differential.rpmOutputDriveTrain = gearbox;
 
             //engine.torqueOutput = differential;
             //engine.rpmOutput = differential;
@@ -66,7 +67,8 @@ namespace CarTemplate
             clutch.clutchInput = triggerTest;
 
             differential.Update();
-            
+
+            speed = GetComponent<Rigidbody>().velocity.magnitude;
             
         }
     }

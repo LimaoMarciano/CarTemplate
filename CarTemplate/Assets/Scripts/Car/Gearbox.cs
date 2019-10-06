@@ -9,6 +9,8 @@ namespace CarTemplate
 
         public GearboxData data;
         private int currentGear = 0;
+        private TransmittedRpm outputRpm = new TransmittedRpm(0f);
+        private TransmittedTorque outputTorque = new TransmittedTorque(0f);
 
         public int CurrentGear
         {
@@ -29,36 +31,37 @@ namespace CarTemplate
             }
         }
 
-        protected override void ProcessRPM()
+        protected override void ProcessInputRpm()
         {
 
             if (data.gearRatios.Count != 0)
             {
-                outputRPM = inputRPM * data.gearRatios[currentGear];
+                outputRpm.rpm = inputRpm.rpm * data.gearRatios[currentGear] * data.finalGear;
             }
             else
             {
                 Debug.LogWarning("Gearbox don't have any gears. Output RPM will be set to zero. Please, set the Gearbox component correctly.");
-                outputRPM = 0.0f;
+                outputRpm.rpm = 0.0f;
             }
 
-            SendOutputRPM();
+            rpmOutputDriveTrain.SetInputRpm(outputRpm);
 
         }
 
-        protected override void ProcessTorque()
+        protected override void ProcessInputTorque()
         {
+
             if (data.gearRatios.Count != 0)
             {
-                outputTorque = inputTorque * data.gearRatios[currentGear];
+                outputTorque.torque = inputTorque.torque * data.gearRatios[currentGear] * data.finalGear;
             }
             else
             {
                 Debug.LogWarning("Gearbox don't have any gears. Output torque will be set to zero. Please, set the Gearbox component correctly.");
-                outputTorque = 0.0f;
+                outputTorque.torque = 0.0f;
             }
 
-            SendOutputTorque();
+            torqueOutputDriveTrain.SetInputTorque(outputTorque);
         }
 
     }

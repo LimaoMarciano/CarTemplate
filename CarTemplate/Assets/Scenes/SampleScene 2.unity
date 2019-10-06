@@ -1498,6 +1498,7 @@ MonoBehaviour:
   drivenWheels:
   - {fileID: 1709504373}
   - {fileID: 548600078}
+  speed: 0
 --- !u!1 &8296172667734305996
 GameObject:
   m_ObjectHideFlags: 0

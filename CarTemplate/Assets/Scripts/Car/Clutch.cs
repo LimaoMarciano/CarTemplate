@@ -9,19 +9,25 @@ namespace CarTemplate
         public float grip = 10f;
         public float clutchInput = 0f;
 
-        protected override void ProcessRPM()
-        {
-            float rpmDifference = inputRPM - outputRPM;
-            outputRPM += rpmDifference * grip * (1f - clutchInput) * Time.deltaTime;
+        private TransmittedRpm outputRpm = new TransmittedRpm(0f);
+        private TransmittedTorque outputTorque = new TransmittedTorque(0f);
 
-            SendOutputRPM();
+        protected override void ProcessInputRpm()
+        {
+
+            outputRpm.connectionSlip = clutchInput;
+
+            float rpmDifference = inputRpm.rpm - outputRpm.rpm;
+            outputRpm.rpm += rpmDifference * grip * (1f - clutchInput) * Time.deltaTime;
+
+            rpmOutputDriveTrain.SetInputRpm(outputRpm);
         }
 
-        protected override void ProcessTorque()
+        protected override void ProcessInputTorque()
         {
-            outputTorque = inputTorque * (1f - clutchInput);
+            outputTorque.torque = inputTorque.torque * (1f - clutchInput);
 
-            SendOutputTorque();
+            torqueOutputDriveTrain.SetInputTorque(outputTorque);
         }
 
     }
