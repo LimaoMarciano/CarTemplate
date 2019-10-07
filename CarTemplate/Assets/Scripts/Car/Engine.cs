@@ -13,10 +13,14 @@ namespace CarTemplate
 
         private TransmittedTorque outputTorque = new TransmittedTorque(0f);
         private float engineRpm = 0f;
-        private float engineResponse = 0.1f;
+        private float engineResponse = 0.3f;
 
         private float smoothDampVelocity = 0f;
 
+        public float EngineRpm
+        {
+            get { return engineRpm; }
+        }
 
         protected override void ProcessInputRpm()
         {
@@ -25,7 +29,6 @@ namespace CarTemplate
 
             targetRpm = Mathf.Lerp(inputRpm.rpm, data.maxRpm * acceleratorInput, inputRpm.connectionSlip);
             engineRpm = Mathf.SmoothDamp(engineRpm, targetRpm, ref smoothDampVelocity, engineResponse);
-            Debug.Log(engineRpm);
 
             outputTorque.torque = GetTorqueFromRpm(engineRpm) * acceleratorInput;
 

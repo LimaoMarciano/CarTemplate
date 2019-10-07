@@ -21,7 +21,7 @@ public class SpeedometerController : MonoBehaviour
     {
         //speedometer.currentSpeed = car.Speed;
         speedometer.currentGear = car.gearbox.CurrentGear;
-        speedometer.rpm = car.engine.InputRpm.rpm;
+        speedometer.rpm = car.engine.EngineRpm;
         speedometer.currentSpeed = car.speed;
     }
 }

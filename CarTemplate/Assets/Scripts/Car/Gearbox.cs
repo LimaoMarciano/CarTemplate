@@ -37,6 +37,17 @@ namespace CarTemplate
             if (data.gearRatios.Count != 0)
             {
                 outputRpm.rpm = inputRpm.rpm * data.gearRatios[currentGear] * data.finalGear;
+
+                //If gear ratio is zero, it means it's neutral. If it's neutral, then set connection slip to 1, meaning that no power is beign transmitted
+                //This is necessary to simulate engine free spinning when on neutral
+                if (data.gearRatios[currentGear] == 0)
+                {
+                    outputRpm.connectionSlip = 1f;
+                }
+                else
+                {
+                    outputRpm.connectionSlip = 0f;
+                }
             }
             else
             {
