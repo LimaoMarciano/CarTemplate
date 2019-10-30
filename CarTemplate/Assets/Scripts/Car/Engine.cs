@@ -33,6 +33,7 @@ namespace CarTemplate
             outputTorque.torque = GetTorqueFromRpm(engineRpm) * acceleratorInput;
 
             torqueOutputDriveTrain.SetInputTorque(outputTorque);
+
         }
 
         private float GetTorqueFromRpm(float rpm)

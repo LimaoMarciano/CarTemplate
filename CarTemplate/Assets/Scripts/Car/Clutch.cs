@@ -14,7 +14,6 @@ namespace CarTemplate
 
         protected override void ProcessInputRpm()
         {
-
             if (inputRpm.connectionSlip == 0)
             {
                 outputRpm.connectionSlip = clutchInput;
@@ -24,7 +23,6 @@ namespace CarTemplate
                 outputRpm.connectionSlip = inputRpm.connectionSlip;
             }
             
-
             float rpmDifference = inputRpm.rpm - outputRpm.rpm;
             outputRpm.rpm += rpmDifference * grip * (1f - clutchInput) * Time.deltaTime;
 

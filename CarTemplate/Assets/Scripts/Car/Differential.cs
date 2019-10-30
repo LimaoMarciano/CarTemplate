@@ -7,30 +7,25 @@ namespace CarTemplate
     public class Differential : DriveTrain
     {
         public WheelCollider[] wheels;
+        public Axle axle;
 
         private TransmittedRpm outputRpm = new TransmittedRpm(0f);
 
         public void Update()
         {
 
-            float totalWheelsRpm = 0;
-            for (int i = 0; i < wheels.Length; i++)
-            {
-                totalWheelsRpm += wheels[i].rpm;
-            }
-            float averageRpm = totalWheelsRpm / wheels.Length;
-
-            outputRpm.rpm = averageRpm;
-
+            outputRpm.rpm = (axle.rightWheel.rpm + axle.leftWheel.rpm) / 2f;
             rpmOutputDriveTrain.SetInputRpm(outputRpm);
+
         }
 
         protected override void ProcessInputTorque()
         {
-            for (int i = 0; i < wheels.Length; i++)
-            {
-                wheels[i].motorTorque = inputTorque.torque / wheels.Length;
-            }
+            
+            float torque = inputTorque.torque / 2f;
+            axle.rightWheel.motorTorque = torque;
+            axle.leftWheel.motorTorque = torque;
+
         }
     }
 }

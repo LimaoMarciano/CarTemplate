@@ -1474,6 +1474,7 @@ GameObject:
   - component: {fileID: 1965672763}
   - component: {fileID: 1965672764}
   - component: {fileID: 8296172667488713676}
+  - component: {fileID: 8296172667488713677}
   m_Layer: 9
   m_Name: Car
   m_TagString: Untagged
@@ -1495,10 +1496,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineData: {fileID: 11400000, guid: ca8d08c5cc751bf4d9ffb9b9d41a9ed0, type: 2}
   gearboxData: {fileID: 11400000, guid: 804fd39626a393742ab7a48d3e8d6d52, type: 2}
-  drivenWheels:
-  - {fileID: 1709504373}
-  - {fileID: 548600078}
+  turnRadius: 10
+  drivenAxle: 0
+  frontAxle:
+    leftWheel: {fileID: 548600078}
+    rightWheel: {fileID: 1709504373}
+  rearAxle:
+    leftWheel: {fileID: 1310286968}
+    rightWheel: {fileID: 209447760}
   speed: 0
+--- !u!114 &8296172667488713677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296172667488713675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa2a524eb7e49940aaeb68aaa6beadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 8296172667488713676}
 --- !u!1 &8296172667734305996
 GameObject:
   m_ObjectHideFlags: 0

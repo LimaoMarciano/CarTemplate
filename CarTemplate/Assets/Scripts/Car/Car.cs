@@ -8,7 +8,14 @@ namespace CarTemplate
     {
         public EngineData engineData;
         public GearboxData gearboxData;
-        public WheelCollider[] drivenWheels;
+        public float turnRadius = 10f;
+
+        public enum DrivenAxle { front, rear };
+        public DrivenAxle drivenAxle;
+        public Axle frontAxle;
+        public Axle rearAxle;
+        
+        [HideInInspector]
         public float speed = 0f;
 
         public Engine engine = new Engine();
@@ -16,14 +23,29 @@ namespace CarTemplate
         public Gearbox gearbox = new Gearbox();
         public Clutch clutch = new Clutch();
 
+        public Steering steering = new Steering();
+
+        private WheelCollider[] drivenWheels;
 
         // Start is called before the first frame update
         void OnEnable()
         {
+            //Get car parts data
             engine.data = engineData;
             gearbox.data = gearboxData;
-            differential.wheels = drivenWheels;
 
+            //Setting up which axle will be driven by the differential
+            switch (drivenAxle)
+            {
+                case DrivenAxle.front:
+                    differential.axle = frontAxle;
+                    break;
+                case DrivenAxle.rear:
+                    differential.axle = rearAxle;
+                    break;
+            }
+
+            //Setting up drive train parts connections
             engine.torqueOutputDriveTrain = clutch;
             engine.rpmOutputDriveTrain = clutch;
 
@@ -33,41 +55,21 @@ namespace CarTemplate
             gearbox.torqueOutputDriveTrain = differential;
             gearbox.rpmOutputDriveTrain = clutch;
 
-            //differential.torqueOutput = gearbox;
             differential.rpmOutputDriveTrain = gearbox;
 
-            //engine.torqueOutput = differential;
-            //engine.rpmOutput = differential;
+            //Setting up steering
+            steering.axle = frontAxle;
+            steering.turnRadius = turnRadius;
+            steering.rearAxleTrack = rearAxle.GetAxleTrack();
+            steering.wheelBase = Vector3.Distance(frontAxle.GetAxleMidPoint(), rearAxle.GetAxleMidPoint());
+            Debug.Log("Rear track: " + steering.rearAxleTrack + ", Wheel base: " + steering.wheelBase);
 
-            //differential.torqueOutput = engine;
-            //differential.rpmOutput = engine;
         }
 
         // Update is called once per frame
         void Update()
         {
-            engine.acceleratorInput = Input.GetAxis("Vertical");
-
-            if (Input.GetButtonDown("Fire1"))
-            {
-                gearbox.IncreaseGear();
-                //StopCoroutine(changeGearCoroutine);
-                //StartCoroutine(changeGearCoroutine);
-            }
-
-            if (Input.GetButtonDown("Fire3"))
-            {
-                gearbox.DecreaseGear();
-                //StopCoroutine(changeGearCoroutine);
-                //StartCoroutine(changeGearCoroutine);
-
-            }
-
-            float triggerTest = Input.GetAxis("RightTrigger");
-            clutch.clutchInput = triggerTest;
-
-            differential.Update();
-
+            
             speed = GetComponent<Rigidbody>().velocity.magnitude;
             
         }
