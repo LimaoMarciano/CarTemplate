@@ -8,12 +8,18 @@ namespace CarTemplate
     {
         public EngineData engineData;
         public GearboxData gearboxData;
+        public BrakesData brakesData;
+
+        [Range(0,1)]
+        public float brakeBias = 0.5f;
         public float turnRadius = 10f;
 
         public enum DrivenAxle { front, rear };
         public DrivenAxle drivenAxle;
         public Axle frontAxle;
         public Axle rearAxle;
+
+        public Vector3 centerOfMass;
         
         [HideInInspector]
         public float speed = 0f;
@@ -24,8 +30,9 @@ namespace CarTemplate
         public Clutch clutch = new Clutch();
 
         public Steering steering = new Steering();
+        public Brakes brakes = new Brakes();
 
-        private WheelCollider[] drivenWheels;
+        private Rigidbody rb;
 
         // Start is called before the first frame update
         void OnEnable()
@@ -64,14 +71,50 @@ namespace CarTemplate
             steering.wheelBase = Vector3.Distance(frontAxle.GetAxleMidPoint(), rearAxle.GetAxleMidPoint());
             Debug.Log("Rear track: " + steering.rearAxleTrack + ", Wheel base: " + steering.wheelBase);
 
+            //Setting up brakes
+            brakes.data = brakesData;
+            brakes.brakeBias = brakeBias;
+            brakes.frontAxle = frontAxle;
+            brakes.rearAxle = rearAxle;
+
+            //Setting up rigidbody
+            rb = GetComponent<Rigidbody>();
+            rb.centerOfMass = centerOfMass;
+
         }
 
         // Update is called once per frame
         void Update()
         {
             
-            speed = GetComponent<Rigidbody>().velocity.magnitude;
-            
+            speed = rb.velocity.magnitude;
+            brakes.brakeBias = brakeBias;
+            differential.Update();
+
+        }
+
+        private void OnDrawGizmos()
+        {
+            drawCenterOfMass();
+        }
+
+        // Gizmos drawing methods
+        private void drawCenterOfMass()
+        {
+            Vector3 pos = transform.position;
+            pos += transform.right * centerOfMass.x;
+            pos += transform.up * centerOfMass.y;
+            pos += transform.forward * centerOfMass.z;
+
+            drawGizmoAtPosition(pos, 0.5f, Color.yellow);
+        }
+
+        private void drawGizmoAtPosition(Vector3 pos, float size, Color color)
+        {
+            float halfSize = size * 0.5f;
+            Debug.DrawLine(new Vector3(pos.x + halfSize, pos.y, pos.z), new Vector3(pos.x - halfSize, pos.y, pos.z), color);
+            Debug.DrawLine(new Vector3(pos.x, pos.y + halfSize, pos.z), new Vector3(pos.x, pos.y - halfSize, pos.z), color);
+            Debug.DrawLine(new Vector3(pos.x, pos.y, pos.z + halfSize), new Vector3(pos.x, pos.y, pos.z - halfSize), color);
         }
     }
 }

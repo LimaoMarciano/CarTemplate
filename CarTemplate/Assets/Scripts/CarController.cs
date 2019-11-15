@@ -17,8 +17,9 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        car.engine.acceleratorInput = Input.GetAxis("Vertical");
-        car.steering.SetSteeringInput(Input.GetAxis("Horizontal"));
+        
+
+        float handbrakeInput = 0f;
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -35,9 +36,13 @@ public class CarController : MonoBehaviour
 
         }
 
-        float triggerTest = Input.GetAxis("RightTrigger");
-        car.clutch.clutchInput = triggerTest;
+        if (Input.GetButton("Fire2"))
+        {
+            handbrakeInput = 1f;
+        }
 
-        car.differential.Update();
+        car.engine.acceleratorInput = Input.GetAxis("RightTrigger");
+        car.steering.SetSteeringInput(Input.GetAxis("Horizontal"));
+        car.brakes.ApplyPressure(Input.GetAxis("LeftTrigger"), handbrakeInput);
     }
 }
