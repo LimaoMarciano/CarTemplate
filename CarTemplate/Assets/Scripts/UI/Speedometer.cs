@@ -36,7 +36,9 @@ public class Speedometer : MonoBehaviour {
 			gear.text = "N";
 		}
 
-		float needleAngle = (range * (rpm / maxRpm)) + minNeedle;
+        float t = Mathf.Clamp01(Mathf.Abs(rpm) / maxRpm);
+
+        float needleAngle = (range * t) + minNeedle;
 		needle.rectTransform.localRotation = Quaternion.Euler (new Vector3 (0, 0, needleAngle));
 	}
 }

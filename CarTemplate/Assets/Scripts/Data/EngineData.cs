@@ -10,5 +10,6 @@ public class EngineData : ScriptableObject
     public float maxRpm = 7000.0f;
     public float minRpm = 1000.0f;
     public float peakPower = 150.0f;
+    public float engineBrakeCoefficient = 1f;
 }
 
