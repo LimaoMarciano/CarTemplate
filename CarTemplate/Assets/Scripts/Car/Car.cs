@@ -13,6 +13,8 @@ namespace CarTemplate
         [Range(0,1)]
         public float brakeBias = 0.5f;
         public float turnRadius = 10f;
+        public float frontAntiRollForce = 5000f;
+        public float rearAntiRollForce = 5000f;
 
         public enum DrivenAxle { front, rear };
         public DrivenAxle drivenAxle;
@@ -24,19 +26,27 @@ namespace CarTemplate
         [HideInInspector]
         public float speed = 0f;
 
+        //Drivetrain parts
         public Engine engine = new Engine();
         public Differential differential = new Differential();
         public Gearbox gearbox = new Gearbox();
         public Clutch clutch = new Clutch();
 
+        //Individual systems
         public Steering steering = new Steering();
         public Brakes brakes = new Brakes();
+        public AntiRollBar frontAntiRollBar = new AntiRollBar();
+        public AntiRollBar rearAntiRollBar = new AntiRollBar();
 
         private Rigidbody rb;
 
         // Start is called before the first frame update
         void OnEnable()
         {
+            //Setting up rigidbody
+            rb = GetComponent<Rigidbody>();
+            rb.centerOfMass = centerOfMass;
+
             //Get car parts data
             engine.data = engineData;
             gearbox.data = gearboxData;
@@ -77,9 +87,14 @@ namespace CarTemplate
             brakes.frontAxle = frontAxle;
             brakes.rearAxle = rearAxle;
 
-            //Setting up rigidbody
-            rb = GetComponent<Rigidbody>();
-            rb.centerOfMass = centerOfMass;
+            //Setting up anti roll bars
+            frontAntiRollBar.axle = frontAxle;
+            frontAntiRollBar.strength = frontAntiRollForce;
+            frontAntiRollBar.rb = rb;
+
+            rearAntiRollBar.axle = rearAxle;
+            rearAntiRollBar.strength = rearAntiRollForce;
+            rearAntiRollBar.rb = rb;
 
         }
 
@@ -90,6 +105,8 @@ namespace CarTemplate
             speed = rb.velocity.magnitude;
             brakes.brakeBias = brakeBias;
             differential.Update();
+            frontAntiRollBar.Update();
+            rearAntiRollBar.Update();
 
         }
 
