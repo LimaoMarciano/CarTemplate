@@ -778,7 +778,7 @@ PrefabInstance:
     - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
       propertyPath: drivenAxle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101286a117888624a8f2a72d16eed3fb, type: 3}

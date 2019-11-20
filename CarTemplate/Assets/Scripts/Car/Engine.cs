@@ -15,6 +15,10 @@ namespace CarTemplate
         private float engineRpm = 0f;
         private float engineResponse = 0.3f;
 
+        private float engineProtectionCutoff = 0.02f;
+        private float engineProtectionTimer = 0.0f;
+        private bool isProtectionOn = false;
+
         private float smoothDampVelocity = 0f;
 
         public float EngineRpm
@@ -26,6 +30,22 @@ namespace CarTemplate
         {
 
             float targetRpm;
+
+            if (engineRpm > (data.maxRpm - 100))
+            {
+                isProtectionOn = true;
+                engineProtectionTimer = 0f;
+            }
+
+            if (isProtectionOn)
+            {
+                engineProtectionTimer += Time.deltaTime;
+                acceleratorInput = 0f;
+                if (engineProtectionTimer >= engineProtectionCutoff)
+                {
+                    isProtectionOn = false;
+                }
+            }
 
             targetRpm = Mathf.Lerp(inputRpm.rpm, data.maxRpm * acceleratorInput, inputRpm.connectionSlip);
             engineRpm = Mathf.SmoothDamp(engineRpm, targetRpm, ref smoothDampVelocity, engineResponse);
