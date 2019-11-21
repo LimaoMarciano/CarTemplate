@@ -40,7 +40,7 @@ namespace CarTemplate
                 outputTorque.torque = GetTorqueFromRpm(engineRpm) * acceleratorInput;
             } else
             {
-                outputTorque.torque = -data.engineBrakeCoefficient * engineRpm / 60;
+                outputTorque.torque = -data.engineBrakeCoefficient * Mathf.Clamp(engineRpm, -data.maxRpm, data.maxRpm) / 60;
             }
             
 

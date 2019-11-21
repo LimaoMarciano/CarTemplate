@@ -48,7 +48,7 @@ namespace CarTemplate
             return Vector3.Distance(leftWheel.transform.position, rightWheel.transform.position);
         }
 
-        WheelInfo GetWheelInfo (WheelCollider wheel)
+        private WheelInfo GetWheelInfo (WheelCollider wheel)
         {
             WheelInfo wheelInfo;
             WheelHit hit = new WheelHit();
@@ -71,6 +71,46 @@ namespace CarTemplate
             return wheelInfo;
         }
 
+        public void SetTyreModel (TyreModel model)
+        {
+            leftWheel.forwardFriction = CreateFrictionCurve(model.forwardFriction);
+            leftWheel.sidewaysFriction = CreateFrictionCurve(model.sidewaysFriction);
+            leftWheel.mass = model.mass;
+            leftWheel.radius = model.radius;
+
+            rightWheel.forwardFriction = CreateFrictionCurve(model.forwardFriction);
+            rightWheel.sidewaysFriction = CreateFrictionCurve(model.sidewaysFriction);
+            rightWheel.mass = model.mass;
+            rightWheel.radius = model.radius;
+        }
+
+        public void SetSuspensionModel (SuspensionModel model)
+        {
+            
+            JointSpring suspensionSpring = new JointSpring();
+            suspensionSpring.spring = model.springForce;
+            suspensionSpring.damper = model.damper;
+            suspensionSpring.targetPosition = model.targetPosition;
+
+            leftWheel.suspensionSpring = suspensionSpring;
+            leftWheel.suspensionDistance = model.suspensionDistance;
+
+            rightWheel.suspensionSpring = suspensionSpring;
+            rightWheel.suspensionDistance = model.suspensionDistance;
+        }
+
+        private WheelFrictionCurve CreateFrictionCurve (TyreModel.FrictionCurveData data)
+        {
+            WheelFrictionCurve frictionCurve = new WheelFrictionCurve();
+
+            frictionCurve.extremumSlip = data.extremumSlip;
+            frictionCurve.extremumValue = data.extremumValue;
+            frictionCurve.asymptoteSlip = data.asymptoteSlip;
+            frictionCurve.asymptoteValue = data.asymptoteValue;
+            frictionCurve.stiffness = data.stiffness;
+
+            return frictionCurve;
+        }
     }
 
 }

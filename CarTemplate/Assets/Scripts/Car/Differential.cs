@@ -9,6 +9,13 @@ namespace CarTemplate
         public WheelCollider[] wheels;
         public Axle axle;
 
+        private float speed;
+
+        public float Speed
+        {
+            get { return speed; }
+        }
+
         private TransmittedRpm outputRpm = new TransmittedRpm(0f);
 
         public void Update()
@@ -16,6 +23,8 @@ namespace CarTemplate
 
             outputRpm.rpm = (axle.rightWheel.rpm + axle.leftWheel.rpm) / 2f;
             rpmOutputDriveTrain.SetInputRpm(outputRpm);
+
+            speed = CalculateSpeed(outputRpm.rpm, axle.rightWheel.radius);
 
         }
 
@@ -28,7 +37,14 @@ namespace CarTemplate
 
         }
 
-        
+        private float CalculateSpeed(float rpm, float wheelRadius)
+        {
+            float wheelCircunference = wheelRadius * 2.0f * Mathf.PI;
+            float speed = (rpm * wheelCircunference) / 60.0f;
+
+            return speed;
+        }
+
     }
 }
 

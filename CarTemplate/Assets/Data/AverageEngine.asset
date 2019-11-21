@@ -57,4 +57,4 @@ MonoBehaviour:
   maxRpm: 6000
   minRpm: 500
   peakPower: 67
-  engineBrakeCoefficient: 0.5
+  engineBrakeCoefficient: 0.2

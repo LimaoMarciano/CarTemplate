@@ -131,7 +131,14 @@ MonoBehaviour:
   gearboxData: {fileID: 11400000, guid: 804fd39626a393742ab7a48d3e8d6d52, type: 2}
   brakesData: {fileID: 11400000, guid: 3e25f64950c3b0749a17d7c4ef924e3e, type: 2}
   brakeBias: 0.52
-  turnRadius: 10
+  frontTyreModel: {fileID: 11400000, guid: 657a99cf38977a6449fff88e5c78358a, type: 2}
+  rearTyreModel: {fileID: 11400000, guid: 657a99cf38977a6449fff88e5c78358a, type: 2}
+  frontSuspensionModel: {fileID: 11400000, guid: 16cfcbf1a0ef49c4ea31e7e02029887a,
+    type: 2}
+  rearSuspensionModel: {fileID: 11400000, guid: 16cfcbf1a0ef49c4ea31e7e02029887a,
+    type: 2}
+  frontAntiRollForce: 5000
+  rearAntiRollForce: 5000
   drivenAxle: 0
   frontAxle:
     leftWheel: {fileID: 4886473581380421651}
@@ -139,8 +146,8 @@ MonoBehaviour:
   rearAxle:
     leftWheel: {fileID: 4886473581944984933}
     rightWheel: {fileID: 4886473580907059789}
+  turnRadius: 10
   centerOfMass: {x: 0, y: 0.74, z: 0.48}
-  speed: 0
 --- !u!114 &3526829519393000144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +517,7 @@ WheelCollider:
   m_Radius: 0.29
   m_SuspensionSpring:
     spring: 15000
-    damper: 1000
+    damper: 1700
     targetPosition: 0.5
   m_SuspensionDistance: 0.2
   m_ForceAppPointDistance: 0.27
@@ -585,7 +592,7 @@ WheelCollider:
   m_Radius: 0.29
   m_SuspensionSpring:
     spring: 15000
-    damper: 1000
+    damper: 1700
     targetPosition: 0.5
   m_SuspensionDistance: 0.2
   m_ForceAppPointDistance: 0.27
@@ -660,7 +667,7 @@ WheelCollider:
   m_Radius: 0.29
   m_SuspensionSpring:
     spring: 15000
-    damper: 1000
+    damper: 1700
     targetPosition: 0.5
   m_SuspensionDistance: 0.2
   m_ForceAppPointDistance: 0.27
@@ -735,7 +742,7 @@ WheelCollider:
   m_Radius: 0.29
   m_SuspensionSpring:
     spring: 15000
-    damper: 1000
+    damper: 1700
     targetPosition: 0.5
   m_SuspensionDistance: 0.2
   m_ForceAppPointDistance: 0.27

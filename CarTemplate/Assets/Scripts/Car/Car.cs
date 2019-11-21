@@ -6,25 +6,37 @@ namespace CarTemplate
 {
     public class Car : MonoBehaviour
     {
+        [Header("Engine and drivetrain")]
         public EngineData engineData;
         public GearboxData gearboxData;
-        public BrakesData brakesData;
 
+        [Header("Brakes")]
+        public BrakesData brakesData;
         [Range(0,1)]
         public float brakeBias = 0.5f;
-        public float turnRadius = 10f;
+
+        [Header("Tires")]
+        public TyreModel frontTyreModel;
+        public TyreModel rearTyreModel;
+
+        [Header("Suspension")]
+        public SuspensionModel frontSuspensionModel;
+        public SuspensionModel rearSuspensionModel;
+
+        [Header("Anti-roll bars")]
         public float frontAntiRollForce = 5000f;
         public float rearAntiRollForce = 5000f;
 
         public enum DrivenAxle { front, rear };
+
+        [Header("Axles")]
         public DrivenAxle drivenAxle;
         public Axle frontAxle;
         public Axle rearAxle;
 
+        [Header("General")]
+        public float turnRadius = 10f;
         public Vector3 centerOfMass;
-        
-        [HideInInspector]
-        public float speed = 0f;
 
         //Drivetrain parts
         public Engine engine = new Engine();
@@ -64,6 +76,14 @@ namespace CarTemplate
                     differential.axle = rearAxle;
                     break;
             }
+
+            //Setting up tyres
+            frontAxle.SetTyreModel(frontTyreModel);
+            rearAxle.SetTyreModel(rearTyreModel);
+
+            //Setting up suspension
+            frontAxle.SetSuspensionModel(frontSuspensionModel);
+            rearAxle.SetSuspensionModel(rearSuspensionModel);
 
             //Setting up drive train parts connections
             engine.torqueOutputDriveTrain = clutch;
@@ -105,7 +125,6 @@ namespace CarTemplate
         void Update()
         {
             
-            speed = rb.velocity.magnitude;
             brakes.brakeBias = brakeBias;
             differential.Update();
             frontAntiRollBar.Update();

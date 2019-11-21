@@ -27,7 +27,7 @@ public class Speedometer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        float speedKmh = currentSpeed * 3.6f;
+        float speedKmh = Mathf.Abs(currentSpeed) * 3.6f;
 		speedText.text = speedKmh.ToString("F0") + "<size=24> km/h</size>";
 
 		if (currentGear >= 0) {
