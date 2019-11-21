@@ -30,11 +30,16 @@ public class Speedometer : MonoBehaviour {
         float speedKmh = currentSpeed * 3.6f;
 		speedText.text = speedKmh.ToString("F0") + "<size=24> km/h</size>";
 
-		if (currentGear > 0) {
-			gear.text = currentGear.ToString ();
-		} else {
-			gear.text = "N";
+		if (currentGear >= 0) {
+			gear.text = (currentGear + 1).ToString ();
 		}
+        else if (currentGear == -1)
+        {
+			gear.text = "N";
+		} else
+        {
+            gear.text = "R";
+        }
 
         float t = Mathf.Clamp01(Mathf.Abs(rpm) / maxRpm);
 

@@ -51,6 +51,9 @@ namespace CarTemplate
             engine.data = engineData;
             gearbox.data = gearboxData;
 
+            //Set car to neutral
+            gearbox.SetCurrentGear(-1);
+
             //Setting up which axle will be driven by the differential
             switch (drivenAxle)
             {

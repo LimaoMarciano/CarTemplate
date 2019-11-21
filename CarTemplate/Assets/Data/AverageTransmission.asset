@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: AverageTransmission
   m_EditorClassIdentifier: 
   gearRatios:
-  - 0
   - 3.1
   - 1.9
   - 1.37
+  - 1.2
   - 1
-  - 0.85
+  reverseGearRatio: 3.4
   finalGear: 3.5

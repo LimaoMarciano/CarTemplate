@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: RaceTransmission
   m_EditorClassIdentifier: 
   gearRatios:
-  - 0
   - 2.3
   - 1.8
   - 1.4
   - 1.1
   - 0.9
+  reverseGearRatio: 2.3
   finalGear: 3.4

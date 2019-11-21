@@ -25,10 +25,15 @@ namespace CarTemplate
 
         public void DecreaseGear()
         {
-            if (currentGear > 0)
+            if (currentGear > -2)
             {
                 currentGear -= 1;
             }
+        }
+
+        public void SetCurrentGear(int gear)
+        {
+            currentGear = Mathf.Clamp(gear, -2, data.gearRatios.Count - 1);
         }
 
         protected override void ProcessInputRpm()
@@ -36,17 +41,27 @@ namespace CarTemplate
 
             if (data.gearRatios.Count != 0)
             {
-                outputRpm.rpm = inputRpm.rpm * data.gearRatios[currentGear] * data.finalGear;
+                
 
                 //If gear ratio is zero, it means it's neutral. If it's neutral, then set connection slip to 1, meaning that no power is beign transmitted
                 //This is necessary to simulate engine free spinning when on neutral
-                if (data.gearRatios[currentGear] == 0)
+                if (currentGear == -1)  
                 {
+                    //Neutral
                     outputRpm.connectionSlip = 1f;
+                    outputRpm.rpm = 0f;
+                }
+                else if (currentGear == -2) 
+                {
+                    //Reverse
+                    outputRpm.connectionSlip = 0f;
+                    outputRpm.rpm = inputRpm.rpm * -data.reverseGearRatio * data.finalGear;
                 }
                 else
                 {
+                    //Normal gears
                     outputRpm.connectionSlip = 0f;
+                    outputRpm.rpm = inputRpm.rpm * data.gearRatios[currentGear] * data.finalGear;
                 }
             }
             else
@@ -64,7 +79,22 @@ namespace CarTemplate
 
             if (data.gearRatios.Count != 0)
             {
-                outputTorque.torque = inputTorque.torque * data.gearRatios[currentGear] * data.finalGear;
+                if (currentGear == -1)
+                {
+                    //Neutral
+                    outputTorque.torque = 0;
+                }
+                else if (currentGear == -2)
+                {
+                    //Reverse
+                    outputTorque.torque = inputTorque.torque * -data.reverseGearRatio * data.finalGear;
+                }
+                else
+                {
+                    //Normal gears
+                    outputTorque.torque = inputTorque.torque * data.gearRatios[currentGear] * data.finalGear;
+                }
+
             }
             else
             {

@@ -6,6 +6,7 @@ using UnityEngine;
 public class GearboxData : ScriptableObject
 {
     public List<float> gearRatios;
+    public float reverseGearRatio;
     public float finalGear;
 }
 
