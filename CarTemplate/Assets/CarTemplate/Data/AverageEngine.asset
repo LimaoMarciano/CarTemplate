@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 452eccf947ad6a541a353ccb1e9a51bf, type: 3}
+  m_Name: AverageEngine
+  m_EditorClassIdentifier: 
+  powerCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.050689697
+      value: -0.0023498535
+      inSlope: 2.2579901
+      outSlope: 2.2579901
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25810334
+      value: 0.46598813
+      inSlope: 2.0452857
+      outSlope: 2.0452857
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.31843308
+      outWeight: 0.107669905
+    - serializedVersion: 3
+      time: 0.69336605
+      value: 0.99659264
+      inSlope: -0.04215529
+      outSlope: -0.04215529
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13724767
+      outWeight: 0.24859436
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: -3.9539962
+      outSlope: -3.9539962
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.10331903
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxRpm: 6000
+  minRpm: 500
+  peakPower: 67
+  engineBrakeCoefficient: 0.2

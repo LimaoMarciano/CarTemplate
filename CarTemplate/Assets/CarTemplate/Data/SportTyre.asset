@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4af9409170db054881e1d5108e5d97f, type: 3}
+  m_Name: SportTyre
+  m_EditorClassIdentifier: 
+  modelName: Default tyre
+  radius: 0.29
+  mass: 20
+  forwardFriction:
+    extremumSlip: 0.2
+    extremumValue: 0.9
+    asymptoteSlip: 0.6
+    asymptoteValue: 0.6
+    stiffness: 1
+  sidewaysFriction:
+    extremumSlip: 0.2
+    extremumValue: 0.9
+    asymptoteSlip: 0.6
+    asymptoteValue: 0.75
+    stiffness: 1
