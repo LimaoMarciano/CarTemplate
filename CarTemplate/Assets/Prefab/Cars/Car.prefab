@@ -98,7 +98,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!64 &4886473582665398305
@@ -108,7 +108,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3526829519393000150}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: d48a6970e5153f0409ada8c31b4c55d6, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec6370d134283564388c13e3c25aa673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  engineData: {fileID: 11400000, guid: ca8d08c5cc751bf4d9ffb9b9d41a9ed0, type: 2}
-  gearboxData: {fileID: 11400000, guid: 804fd39626a393742ab7a48d3e8d6d52, type: 2}
+  engineData: {fileID: 11400000, guid: 60f9eb9ecbff6814088f319e3a462650, type: 2}
+  gearboxData: {fileID: 11400000, guid: 0945b4c13f496d843b17f2244e273c35, type: 2}
   brakesData: {fileID: 11400000, guid: 3e25f64950c3b0749a17d7c4ef924e3e, type: 2}
   brakeBias: 0.52
   frontTyreModel: {fileID: 11400000, guid: 657a99cf38977a6449fff88e5c78358a, type: 2}
@@ -139,7 +139,8 @@ MonoBehaviour:
     type: 2}
   frontAntiRollForce: 5000
   rearAntiRollForce: 5000
-  drivenAxle: 0
+  differentialLock: 0.338
+  drivenAxle: 1
   frontAxle:
     leftWheel: {fileID: 4886473581380421651}
     rightWheel: {fileID: 4886473582409205352}
@@ -161,6 +162,82 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 3526829519393000145}
+  changeGearSpeed: 2
+  acceleratorFilter:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  brakesFilter:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  steeringFilter:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 0
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  useFilteredAccelerator: 1
+  useFilteredBrakes: 1
+  useFilteredSteering: 1
 --- !u!1 &3526829519441468881
 GameObject:
   m_ObjectHideFlags: 0
