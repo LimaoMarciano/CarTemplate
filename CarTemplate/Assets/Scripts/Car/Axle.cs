@@ -16,11 +16,20 @@ namespace CarTemplate
         public WheelCollider leftWheel;
         public WheelCollider rightWheel;
 
+        //Public getters
+        //================================================================================================================
+
+        /// <summary>
+        /// Left wheel collision info
+        /// </summary>
         public WheelInfo LeftWheelInfo
         {
             get { return GetWheelInfo(leftWheel); }
         }
 
+        /// <summary>
+        /// Right wheel collision info
+        /// </summary>
         public WheelInfo RightWheelInfo
         {
             get { return GetWheelInfo(rightWheel); }
@@ -36,6 +45,10 @@ namespace CarTemplate
             public float forceOnContact;
             public PhysicMaterial contactMaterial;
         }
+        
+
+        //Methods
+        //================================================================================================================
 
         /// <summary>
         /// Returns the axle mid point position

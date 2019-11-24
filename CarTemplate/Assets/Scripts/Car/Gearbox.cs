@@ -15,7 +15,7 @@ namespace CarTemplate
     {
 
         public GearboxData data;
-        private int currentGear = 0;
+        private int currentGear = -1;
         private TransmittedRpm outputRpm = new TransmittedRpm(0f);
         private TransmittedTorque outputTorque = new TransmittedTorque(0f);
 
@@ -28,34 +28,8 @@ namespace CarTemplate
             get { return currentGear; }
         }
 
-        /// <summary>
-        /// Increase current gear by one. It won't increase if it's on last gear.
-        /// </summary>
-        public void IncreaseGear()
-        {
-            if (currentGear < data.gearRatios.Count - 1)
-                currentGear += 1;
-        }
-
-        /// <summary>
-        /// Decreases current gear by one. It's won't decrease below reverse gear.
-        /// </summary>
-        public void DecreaseGear()
-        {
-            if (currentGear > -2)
-            {
-                currentGear -= 1;
-            }
-        }
-
-        /// <summary>
-        /// Set directly to a specific gear. If the value is off range, it'll be clamped between -2 (reverse) and the last gear.
-        /// </summary>
-        /// <param name="gear"></param>
-        public void SetCurrentGear(int gear)
-        {
-            currentGear = Mathf.Clamp(gear, -2, data.gearRatios.Count - 1);
-        }
+        //Methods
+        //=============================================================================================================
 
         protected override void ProcessInputRpm()
         {
@@ -63,7 +37,6 @@ namespace CarTemplate
             if (data.gearRatios.Count != 0)
             {
                 
-
                 //If gear ratio is zero, it means it's neutral. If it's neutral, then set connection slip to 1, meaning that no power is beign transmitted
                 //This is necessary to simulate engine free spinning when on neutral
                 if (currentGear == -1)  
@@ -91,7 +64,14 @@ namespace CarTemplate
                 outputRpm.rpm = 0.0f;
             }
 
-            rpmOutputDriveTrain.SetInputRpm(outputRpm);
+            if (rpmOutputDriveTrain != null)
+            {
+                rpmOutputDriveTrain.SetInputRpm(outputRpm);
+            }
+            else
+            {
+                Debug.LogWarning("Gearbox doesn't have a RPM output. Won't transmit RPM.");
+            }
 
         }
 
@@ -123,7 +103,43 @@ namespace CarTemplate
                 outputTorque.torque = 0.0f;
             }
 
-            torqueOutputDriveTrain.SetInputTorque(outputTorque);
+            if (torqueOutputDriveTrain != null)
+            {
+                torqueOutputDriveTrain.SetInputTorque(outputTorque);
+            }
+            else
+            {
+                Debug.LogWarning("Gearbox doesn't have a torque output. Won't transmit torque.");
+            }
+        }
+
+        /// <summary>
+        /// Increase current gear by one. It won't increase if it's on last gear.
+        /// </summary>
+        public void IncreaseGear()
+        {
+            if (currentGear < data.gearRatios.Count - 1)
+                currentGear += 1;
+        }
+
+        /// <summary>
+        /// Decreases current gear by one. It's won't decrease below reverse gear.
+        /// </summary>
+        public void DecreaseGear()
+        {
+            if (currentGear > -2)
+            {
+                currentGear -= 1;
+            }
+        }
+
+        /// <summary>
+        /// Set directly to a specific gear. If the value is off range, it'll be clamped between -2 (reverse) and the last gear.
+        /// </summary>
+        /// <param name="gear"></param>
+        public void SetCurrentGear(int gear)
+        {
+            currentGear = Mathf.Clamp(gear, -2, data.gearRatios.Count - 1);
         }
 
     }

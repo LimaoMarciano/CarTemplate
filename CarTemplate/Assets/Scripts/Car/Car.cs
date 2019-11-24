@@ -77,9 +77,6 @@ namespace CarTemplate
             engine.data = engineData;
             gearbox.data = gearboxData;
 
-            //Set car to neutral gear
-            gearbox.SetCurrentGear(-1);
-
             //Setting up which axle will be driven by the differential
             switch (drivenAxle)
             {
@@ -102,24 +99,11 @@ namespace CarTemplate
             frontAxle.SetSuspensionModel(frontSuspensionModel);
             rearAxle.SetSuspensionModel(rearSuspensionModel);
 
-            //Setting up drive train parts connections
-            engine.torqueOutputDriveTrain = clutch;
-            engine.rpmOutputDriveTrain = clutch;
-
-            clutch.torqueOutputDriveTrain = gearbox;
-            clutch.rpmOutputDriveTrain = engine;
-
-            gearbox.torqueOutputDriveTrain = differential;
-            gearbox.rpmOutputDriveTrain = clutch;
-
-            differential.rpmOutputDriveTrain = gearbox;
-
             //Setting up steering
             steering.axle = frontAxle;
             steering.turnRadius = turnRadius;
             steering.rearAxleTrack = rearAxle.GetAxleTrack();
             steering.wheelBase = Vector3.Distance(frontAxle.GetAxleMidPoint(), rearAxle.GetAxleMidPoint());
-            Debug.Log("Rear track: " + steering.rearAxleTrack + ", Wheel base: " + steering.wheelBase);
 
             //Setting up brakes
             brakes.data = brakesData;
@@ -136,6 +120,20 @@ namespace CarTemplate
             rearAntiRollBar.strength = rearAntiRollForce;
             rearAntiRollBar.rb = rb;
 
+            //Setting up drive train parts connections
+            // RPM path:    differential ==> gearbox ==> clutch ==> engine
+            // Torque path: differential <== gearbox <== clutch <== engine
+
+            engine.torqueOutputDriveTrain = clutch;
+            engine.rpmOutputDriveTrain = clutch;
+
+            clutch.torqueOutputDriveTrain = gearbox;
+            clutch.rpmOutputDriveTrain = engine;
+
+            gearbox.torqueOutputDriveTrain = differential;
+            gearbox.rpmOutputDriveTrain = clutch;
+
+            differential.rpmOutputDriveTrain = gearbox;
         }
 
         // Update is called once per frame

@@ -27,6 +27,9 @@ namespace CarTemplate
         protected TransmittedRpm inputRpm;
         protected TransmittedTorque inputTorque;
 
+        //Public getters
+        //========================================================================================
+
         public TransmittedRpm InputRpm
         {
             get { return inputRpm; }
@@ -39,7 +42,7 @@ namespace CarTemplate
 
 
         //Methods
-        /*=======================================================================================*/
+        //========================================================================================
 
 
         /// <summary>

@@ -12,26 +12,44 @@ namespace CarTemplate
     public class Engine : DriveTrain
     {
         public EngineData data;
+
+        /// <summary>
+        /// Engine accelerator input. Control the percentage of current torque sent to drive train.
+        /// </summary>
         [Range (0,1)]
         public float acceleratorInput = 0.0f;
 
         private TransmittedTorque outputTorque = new TransmittedTorque(0f);
-        private float engineRpm = 0f;
+        
+        /// <summary>
+        /// How fast the engine respond to changes. Used to give a quick or sluggish feel to engine.
+        /// </summary>
         private float engineResponse = 0.3f;
 
         private float smoothDampVelocity = 0f;
 
+        private float engineRpm = 0f;
+
+        //Public getters
+        //=======================================================================================================
+
+        /// <summary>
+        /// Current engine RPM
+        /// </summary>
         public float EngineRpm
         {
             get { return engineRpm; }
         }
+
+        //Methods
+        //========================================================================================================
 
         protected override void ProcessInputRpm()
         {
 
             float targetRpm;
 
-            if (engineRpm > (data.maxRpm))
+            if (engineRpm > (data.maxRpm - 100))
             {
                 acceleratorInput = 0f;
             }
@@ -47,11 +65,22 @@ namespace CarTemplate
                 outputTorque.torque = -data.engineBrakeCoefficient * Mathf.Clamp(engineRpm, -data.maxRpm, data.maxRpm) / 60;
             }
             
-
-            torqueOutputDriveTrain.SetInputTorque(outputTorque);
+            if (torqueOutputDriveTrain != null)
+            {
+                torqueOutputDriveTrain.SetInputTorque(outputTorque);
+            }
+            else
+            {
+                Debug.LogWarning("Engine doesn't have a torque output. Won't transmit torque.");
+            }
 
         }
 
+        /// <summary>
+        /// Calculates engine torque based on current RPM, considering the engine power curve
+        /// </summary>
+        /// <param name="rpm">Engine RPM</param>
+        /// <returns>Torque from current RPM</returns>
         private float GetTorqueFromRpm(float rpm)
         {
             float t = Mathf.Clamp(rpm, data.minRpm, data.maxRpm) / data.maxRpm;
