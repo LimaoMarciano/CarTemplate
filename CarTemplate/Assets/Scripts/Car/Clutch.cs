@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace CarTemplate
 {
+    /// <summary>
+    /// The clutch disconnects engine and gearbox to allow a gear change.
+    /// <para>When not fully depressed, it'll slip and progressively match the rpm of both, while losing torque transfer efficiency.
+    /// The grip variable defines how fast the clutch will match engine and gearbox RPM</para>
+    /// <para>When the clutch is not depressed, it will simply pass RPM and torque through</para>
+    /// </summary>
     public class Clutch : DriveTrain
     {
         public float grip = 10f;

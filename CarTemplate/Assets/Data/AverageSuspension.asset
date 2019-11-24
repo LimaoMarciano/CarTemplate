@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suspensionDistance: 0.2
   targetPosition: 0.5
-  springForce: 15000
-  damper: 1700
+  springForce: 16000
+  damper: 1900
   ForceAppPointDistance: 0.27

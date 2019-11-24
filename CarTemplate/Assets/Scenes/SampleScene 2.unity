@@ -521,6 +521,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3059197677392400457, guid: 20d211080f49a0b4db3d2a92c1a2d733,
+        type: 3}
+      propertyPath: maxRpm
+      value: 6000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3059197677392400457, guid: 20d211080f49a0b4db3d2a92c1a2d733,
+        type: 3}
+      propertyPath: redlineRpm
+      value: 4200
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20d211080f49a0b4db3d2a92c1a2d733, type: 3}
 --- !u!1 &995500484
@@ -735,7 +745,7 @@ PrefabInstance:
     - target: {fileID: 480347063106599109, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 480347063106599109, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
@@ -781,6 +791,75 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: brakeBias
+      value: 0.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: drivenAxle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: engineData
+      value: 
+      objectReference: {fileID: 11400000, guid: ca8d08c5cc751bf4d9ffb9b9d41a9ed0,
+        type: 2}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: gearboxData
+      value: 
+      objectReference: {fileID: 11400000, guid: 804fd39626a393742ab7a48d3e8d6d52,
+        type: 2}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: centerOfMass.y
+      value: 0.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: centerOfMass.z
+      value: 0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: differentialLock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: frontTyreModel
+      value: 
+      objectReference: {fileID: 11400000, guid: 66cc0695b70c4b14090a8008f8dc6d00,
+        type: 2}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: rearTyreModel
+      value: 
+      objectReference: {fileID: 11400000, guid: 66cc0695b70c4b14090a8008f8dc6d00,
+        type: 2}
+    - target: {fileID: 4886473581380421651, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886473582409205352, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886473581944984933, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886473580907059789, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101286a117888624a8f2a72d16eed3fb, type: 3}
@@ -927,6 +1006,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 314085469}
     m_Modifications:
+    - target: {fileID: 4944710429761278818, guid: ffc9eab244625ca4b9c4c93d82276c01,
+        type: 3}
+      propertyPath: car
+      value: 
+      objectReference: {fileID: 8296172667488713676}
     - target: {fileID: 8831550701780558131, guid: ffc9eab244625ca4b9c4c93d82276c01,
         type: 3}
       propertyPath: m_Name
@@ -1000,12 +1084,12 @@ PrefabInstance:
     - target: {fileID: 8831550701780558128, guid: ffc9eab244625ca4b9c4c93d82276c01,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 254.4
+      value: 345.5
       objectReference: {fileID: 0}
     - target: {fileID: 8831550701780558128, guid: ffc9eab244625ca4b9c4c93d82276c01,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 365
+      value: 398.4
       objectReference: {fileID: 0}
     - target: {fileID: 8831550701780558128, guid: ffc9eab244625ca4b9c4c93d82276c01,
         type: 3}
@@ -1042,5 +1126,20 @@ PrefabInstance:
       propertyPath: car
       value: 
       objectReference: {fileID: 8296172667488713676}
+    - target: {fileID: 8578952287168680087, guid: ffc9eab244625ca4b9c4c93d82276c01,
+        type: 3}
+      propertyPath: car
+      value: 
+      objectReference: {fileID: 8296172667488713676}
+    - target: {fileID: 5909360190618491205, guid: ffc9eab244625ca4b9c4c93d82276c01,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.18001938
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031226905894820528, guid: ffc9eab244625ca4b9c4c93d82276c01,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.18001938
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffc9eab244625ca4b9c4c93d82276c01, type: 3}

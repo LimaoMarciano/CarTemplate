@@ -5,6 +5,10 @@ using UnityEngine;
 namespace CarTemplate
 {
 
+    /// <summary>
+    /// <para>The engine is the heart of the car. It produces torque based on it's current RPM.</para>
+    /// This class receives RPM from the connected drive train and sends back corresponding torque
+    /// </summary>
     public class Engine : DriveTrain
     {
         public EngineData data;
@@ -27,7 +31,7 @@ namespace CarTemplate
 
             float targetRpm;
 
-            if (engineRpm > (data.maxRpm - 100))
+            if (engineRpm > (data.maxRpm))
             {
                 acceleratorInput = 0f;
             }

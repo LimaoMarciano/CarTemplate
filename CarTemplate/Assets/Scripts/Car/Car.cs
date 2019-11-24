@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace CarTemplate
 {
+    /// <summary>
+    /// Main car class, responsible for setting up a vehicle.
+    /// It has references to all car parts, allowing to read info from them.
+    /// <para>You may use this class as a template for creating other kinds of car</para>
+    /// </summary>
     public class Car : MonoBehaviour
     {
         [Header("Engine and drivetrain")]
@@ -30,6 +35,8 @@ namespace CarTemplate
         public enum DrivenAxle { front, rear };
 
         [Header("Axles")]
+        [Range(-1,1)]
+        public float differentialLock = 0;
         public DrivenAxle drivenAxle;
         public Axle frontAxle;
         public Axle rearAxle;
@@ -52,9 +59,16 @@ namespace CarTemplate
 
         private Rigidbody rb;
 
-        // Start is called before the first frame update
         void OnEnable()
         {
+
+            
+            //Here's all steps to configure a car!
+            
+            //How many substeps per fixed update the vehicles will use.
+            //This is a global value that affects all vehicles on scene
+            frontAxle.leftWheel.ConfigureVehicleSubsteps(5, 5, 5);
+            
             //Setting up rigidbody
             rb = GetComponent<Rigidbody>();
             rb.centerOfMass = centerOfMass;
@@ -63,7 +77,7 @@ namespace CarTemplate
             engine.data = engineData;
             gearbox.data = gearboxData;
 
-            //Set car to neutral
+            //Set car to neutral gear
             gearbox.SetCurrentGear(-1);
 
             //Setting up which axle will be driven by the differential
@@ -76,6 +90,9 @@ namespace CarTemplate
                     differential.axle = rearAxle;
                     break;
             }
+
+            //Setting up if the differential will behave as a open or locked diff.
+            differential.lockStrenght = differentialLock;
 
             //Setting up tyres
             frontAxle.SetTyreModel(frontTyreModel);
@@ -124,8 +141,9 @@ namespace CarTemplate
         // Update is called once per frame
         void Update()
         {
-            
-            brakes.brakeBias = brakeBias;
+
+            //Some parts needs to be updated every frame to gather info.
+            //(Wheel rpm, suspension compression...)
             differential.Update();
             frontAntiRollBar.Update();
             rearAntiRollBar.Update();
@@ -138,6 +156,11 @@ namespace CarTemplate
         }
 
         // Gizmos drawing methods
+        //========================================================================
+
+        /// <summary>
+        /// Draws the vehicle center of mass on Scene view
+        /// </summary>
         private void drawCenterOfMass()
         {
             Vector3 pos = transform.position;
@@ -148,6 +171,13 @@ namespace CarTemplate
             drawGizmoAtPosition(pos, 0.5f, Color.yellow);
         }
 
+
+        /// <summary>
+        /// Draws a 3D cross gizmo at position
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="size"></param>
+        /// <param name="color"></param>
         private void drawGizmoAtPosition(Vector3 pos, float size, Color color)
         {
             float halfSize = size * 0.5f;

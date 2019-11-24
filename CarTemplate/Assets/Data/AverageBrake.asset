@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46d42f10dead1a45be33cac14f9a6c2, type: 3}
   m_Name: AverageBrake
   m_EditorClassIdentifier: 
-  frontBrakePower: 2000
-  rearBrakePower: 2000
+  frontBrakePower: 1800
+  rearBrakePower: 1300
   handbrakePower: 2000

@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace CarTemplate
 {
+    /// <summary>
+    /// The gearbox allows to multiply the received torque while losing speed and vice-versa through different gear ratios.
+    /// <para>A common car have several gears, with the lower ones amplifying torque and the higher ones
+    /// aiming for high speed.</para>
+    /// <para>The gear ratios values are crucial to tweak car acceleration and top speed.</para>
+    /// <para>It's possible to create as many gears you wish, with configurable ratios. The only fixed gears are neutral and reverse.</para>
+    /// </summary>
     public class Gearbox : DriveTrain
     {
 
@@ -12,17 +19,27 @@ namespace CarTemplate
         private TransmittedRpm outputRpm = new TransmittedRpm(0f);
         private TransmittedTorque outputTorque = new TransmittedTorque(0f);
 
+        /// <summary>
+        /// The current selected gear.
+        /// <para>Reverse = -2, Neutral = -1, 1st Gear = 0</para>
+        /// </summary>
         public int CurrentGear
         {
             get { return currentGear; }
         }
 
+        /// <summary>
+        /// Increase current gear by one. It won't increase if it's on last gear.
+        /// </summary>
         public void IncreaseGear()
         {
             if (currentGear < data.gearRatios.Count - 1)
                 currentGear += 1;
         }
 
+        /// <summary>
+        /// Decreases current gear by one. It's won't decrease below reverse gear.
+        /// </summary>
         public void DecreaseGear()
         {
             if (currentGear > -2)
@@ -31,6 +48,10 @@ namespace CarTemplate
             }
         }
 
+        /// <summary>
+        /// Set directly to a specific gear. If the value is off range, it'll be clamped between -2 (reverse) and the last gear.
+        /// </summary>
+        /// <param name="gear"></param>
         public void SetCurrentGear(int gear)
         {
             currentGear = Mathf.Clamp(gear, -2, data.gearRatios.Count - 1);

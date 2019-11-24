@@ -12,53 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452eccf947ad6a541a353ccb1e9a51bf, type: 3}
   m_Name: RaceEngine
   m_EditorClassIdentifier: 
-  torqueCurve:
+  powerCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.8654213
-      outSlope: 0.8654213
+      inSlope: 1.2407018
+      outSlope: 1.2407018
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.25946897
+      outWeight: 0.05875576
     - serializedVersion: 3
-      time: 0.32700905
-      value: 0.43338987
-      inSlope: 1.7910634
-      outSlope: 1.7910634
+      time: 0.7986623
+      value: 0.997647
+      inSlope: -0.0006509285
+      outSlope: -0.0006509285
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.15781696
-    - serializedVersion: 3
-      time: 0.7012348
-      value: 0.99972355
-      inSlope: -0.0031700055
-      outSlope: -0.0031700055
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.108778335
-      outWeight: 0.34040835
-    - serializedVersion: 3
-      time: 0.87797266
-      value: 0.8640665
-      inSlope: -1.8424344
-      outSlope: -1.8424344
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.16920578
+      inWeight: 0.090213224
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -7.5725994
-      outSlope: -7.5725994
+      time: 0.99884784
+      value: 0.80235296
+      inSlope: -2.0496361
+      outSlope: -2.0496361
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.14963661
+      inWeight: 0.23568432
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -66,3 +48,4 @@ MonoBehaviour:
   maxRpm: 7000
   minRpm: 1000
   peakPower: 170
+  engineBrakeCoefficient: 0.2

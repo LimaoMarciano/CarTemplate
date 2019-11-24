@@ -5,6 +5,10 @@ using UnityEngine;
 namespace CarTemplate
 {
 
+    /// <summary>
+    /// The anti roll bar connects the two wheels on an axle, creating resistance to difference between both wheels' suspension compressions.
+    /// <para>It's a crucial part for cornering stability, avoiding excessive body roll</para>
+    /// </summary>
     public class AntiRollBar
     {
 

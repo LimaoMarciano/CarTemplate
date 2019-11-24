@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4af9409170db054881e1d5108e5d97f, type: 3}
-  m_Name: SportTyre
+  m_Name: DirtTyre
   m_EditorClassIdentifier: 
   modelName: Default tyre
   radius: 0.29
   mass: 20
   forwardFriction:
-    extremumSlip: 0.2
-    extremumValue: 0.9
-    asymptoteSlip: 0.6
-    asymptoteValue: 0.6
+    extremumSlip: 0.4
+    extremumValue: 0.6
+    asymptoteSlip: 0.8
+    asymptoteValue: 0.3
     stiffness: 1
   sidewaysFriction:
-    extremumSlip: 0.2
-    extremumValue: 0.9
-    asymptoteSlip: 0.6
-    asymptoteValue: 0.75
+    extremumSlip: 0.4
+    extremumValue: 0.6
+    asymptoteSlip: 0.8
+    asymptoteValue: 0.3
     stiffness: 1
