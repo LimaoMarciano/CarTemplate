@@ -139,8 +139,10 @@ MonoBehaviour:
     type: 2}
   frontAntiRollForce: 5000
   rearAntiRollForce: 5000
-  differentialLock: 0.338
-  drivenAxle: 1
+  frontDifferentialLock: -0.517
+  rearDifferentialLock: -0.507
+  centerDifferentialLock: -0.515
+  drivenAxle: 2
   frontAxle:
     leftWheel: {fileID: 4886473581380421651}
     rightWheel: {fileID: 4886473582409205352}

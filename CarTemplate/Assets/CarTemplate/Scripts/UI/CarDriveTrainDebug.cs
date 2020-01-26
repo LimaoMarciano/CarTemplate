@@ -24,9 +24,26 @@ public class CarDriveTrainDebug : MonoBehaviour
         gearbox.driveTrain = car.gearbox;
         gearbox.panelLabel = "Gearbox";
 
-        DriveTrainDebug differential = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
-        differential.driveTrain = car.differential;
-        differential.panelLabel = "Differential";
+        if (car.drivenAxle == Car.DrivenAxle.front || car.drivenAxle == Car.DrivenAxle.rear)
+        {
+            DriveTrainDebug differential = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
+            differential.driveTrain = car.Differential;
+            differential.panelLabel = "Differential";
+        }
+        else
+        {
+            DriveTrainDebug centerDifferential = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
+            centerDifferential.driveTrain = car.frontDifferential;
+            centerDifferential.panelLabel = "Center Diff";
+
+            DriveTrainDebug frontDifferential = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
+            frontDifferential.driveTrain = car.frontDifferential;
+            frontDifferential.panelLabel = "Front Diff";
+
+            DriveTrainDebug rearDifferential = Instantiate(driveTrainDebugPrefab, gameObject.transform).GetComponent<DriveTrainDebug>();
+            rearDifferential.driveTrain = car.rearDifferential;
+            rearDifferential.panelLabel = "Rear Diff";
+        }
 
     }
 

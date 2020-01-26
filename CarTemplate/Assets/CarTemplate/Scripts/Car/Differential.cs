@@ -4,22 +4,15 @@ using UnityEngine;
 
 namespace CarTemplate
 {
-    /// <summary>
-    /// The differential is responsible for splitting the engine torque between the two axle wheels.
-    /// A car may have more than one differential if it's a all-wheel-drive.
-    /// <para>The implementation here is similar to what would be a limited slip differential. 
-    /// Lock strenght defines if it's more open (value -1) or more locked (value 1)</para>
-    /// </summary>
+
     public class Differential : DriveTrain
     {
-        public WheelCollider[] wheels;
-        public Axle axle;
         public float lockStrenght = 0f;
+        protected float speed;
+        protected float torqueSplit;
+        protected float rpmDifferenceRatio;
 
-        private TransmittedRpm outputRpm = new TransmittedRpm(0f);
-        private float speed;
-        private float torqueSplit;
-        private float rpmDifferenceRatio;
+        protected TransmittedRpm outputRpm = new TransmittedRpm(0f);
 
         //Public getters
         //=================================================================================================
@@ -50,86 +43,44 @@ namespace CarTemplate
             get { return rpmDifferenceRatio; }
         }
 
-        //Methods
-        //=================================================================================================
-
-        public void Update()
+        public float Rpm
         {
+            get { return outputRpm.rpm; }
+        }
 
-            if (axle != null && axle.leftWheel != null && axle.rightWheel != null)
-            {
-                outputRpm.rpm = (axle.rightWheel.rpm + axle.leftWheel.rpm) / 2f;
-                speed = CalculateSpeed(outputRpm.rpm, axle.rightWheel.radius);
-            }
-            else
-            {
-                Debug.LogWarning("Differential doesn't have a axle assigned or wheels are missing! Output RPM will be zero.");
-                outputRpm.rpm = 0f;
-                speed = 0;
-            }
-
+        public virtual void Update()
+        {
             if (rpmOutputDriveTrain != null)
             {
-                rpmOutputDriveTrain.SetInputRpm(outputRpm);
+                rpmOutputDriveTrain.SetInputRpm(new TransmittedRpm(0f));
             }
             else
             {
                 Debug.LogWarning("Differential doesn't have a RPM output. Won't transmit RPM.");
             }
-            
         }
 
-        protected override void ProcessInputTorque()
+        protected float CalculateTorqueSplit (float rpm1, float rpm2)
         {
+            float split = 0.5f;
 
-            if (axle != null && axle.leftWheel != null && axle.rightWheel != null)
+            //Calculate rpm difference between the two values
+            //Negative values means that rpm1 wheel is faster than rpm2
+            if (rpm1 != 0 || rpm2 != 0)
             {
-                
-                //Calculate rpm difference between the two wheels
-                //Negative values means that right wheel is faster than left
-                float leftWheelRpm = axle.leftWheel.rpm;
-                float rightWheelRpm = axle.rightWheel.rpm;
-
-                if (leftWheelRpm != 0 || rightWheelRpm != 0)
-                {
-                    rpmDifferenceRatio = (rightWheelRpm - leftWheelRpm) / (rightWheelRpm + leftWheelRpm);
-                }
-                else
-                {
-                    rpmDifferenceRatio = 0;
-                }
-
-                //Calculating the torque proportion that each wheel will receive. 1 = 100% left wheel, 0 = 100% right wheel
-                //Lock strenght defines if torque goes to most slipping wheel (open diff) or to less slipping wheel (locked diff)
-                float bias = Mathf.Clamp(rpmDifferenceRatio, -1, 1) * 0.5f;
-                torqueSplit = 0.5f + (bias * Mathf.Clamp(lockStrenght, -1, 1));
-
-                axle.leftWheel.motorTorque = inputTorque.torque * torqueSplit;
-                axle.rightWheel.motorTorque = inputTorque.torque * (1 - torqueSplit);
-
+                rpmDifferenceRatio = (rpm1 - rpm2) / (rpm1 + rpm2);
             }
             else
             {
-                Debug.LogWarning("Differential doesn't have a axle assigned or wheels are missing! Can't transfer torque to wheels.");
+                rpmDifferenceRatio = 0;
             }
 
+            //Calculating the torque proportion that each element will receive. 1 = 100% rpm2 element, 0 = 100% rpm1 element
+            //Lock strenght defines if torque goes to most slipping wheel (open diff) or to less slipping wheel (locked diff)
+            float bias = Mathf.Clamp(rpmDifferenceRatio, -1, 1) * 0.5f;
+            split = 0.5f + (bias * Mathf.Clamp(lockStrenght, -1, 1));
 
+            return split;
         }
-
-        /// <summary>
-        /// Calculates speed in m/s based on rpm and wheel radius
-        /// </summary>
-        /// <param name="rpm">Wheel RPM</param>
-        /// <param name="wheelRadius">Wheel radius</param>
-        /// <returns>Returns speed in meters per second</returns>
-        private float CalculateSpeed(float rpm, float wheelRadius)
-        {
-            float wheelCircunference = wheelRadius * 2.0f * Mathf.PI;
-            float speed = (rpm * wheelCircunference) / 60.0f;
-
-            return speed;
-        }
-
     }
 }
-

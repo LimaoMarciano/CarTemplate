@@ -32,11 +32,18 @@ namespace CarTemplate
         public float frontAntiRollForce = 5000f;
         public float rearAntiRollForce = 5000f;
 
-        public enum DrivenAxle { front, rear };
+        public enum DrivenAxle { front, rear, all };
 
         [Header("Axles")]
         [Range(-1,1)]
-        public float differentialLock = 0;
+        public float frontDifferentialLock = 0;
+
+        [Range(-1, 1)]
+        public float rearDifferentialLock = 0;
+
+        [Range(-1, 1)]
+        public float centerDifferentialLock = 0;
+
         public DrivenAxle drivenAxle;
         public Axle frontAxle;
         public Axle rearAxle;
@@ -47,7 +54,9 @@ namespace CarTemplate
 
         //Drivetrain parts
         public Engine engine = new Engine();
-        public Differential differential = new Differential();
+        public CenterDifferential centerDifferential;
+        public AxleDifferential frontDifferential;
+        public AxleDifferential rearDifferential;
         public Gearbox gearbox = new Gearbox();
         public Clutch clutch = new Clutch();
 
@@ -58,6 +67,12 @@ namespace CarTemplate
         public AntiRollBar rearAntiRollBar = new AntiRollBar();
 
         private Rigidbody rb;
+        private Differential updatedDifferential;
+
+        public Differential Differential
+        {
+            get { return updatedDifferential; }
+        }
 
         void OnEnable()
         {
@@ -81,15 +96,39 @@ namespace CarTemplate
             switch (drivenAxle)
             {
                 case DrivenAxle.front:
-                    differential.axle = frontAxle;
-                    break;
-                case DrivenAxle.rear:
-                    differential.axle = rearAxle;
-                    break;
-            }
 
-            //Setting up if the differential will behave as a open or locked diff.
-            differential.lockStrenght = differentialLock;
+                    frontDifferential = new AxleDifferential();
+                    frontDifferential.axle = frontAxle;
+                    frontDifferential.lockStrenght = frontDifferentialLock;
+                    updatedDifferential = frontDifferential;
+                    break;
+
+                case DrivenAxle.rear:
+
+                    rearDifferential = new AxleDifferential();
+                    rearDifferential.axle = rearAxle;
+                    rearDifferential.lockStrenght = rearDifferentialLock;
+                    updatedDifferential = rearDifferential;
+                    break;
+
+                case DrivenAxle.all:
+                    
+                    frontDifferential = new AxleDifferential();
+                    frontDifferential.axle = frontAxle;
+                    frontDifferential.lockStrenght = frontDifferentialLock;
+
+                    rearDifferential = new AxleDifferential();
+                    rearDifferential.axle = rearAxle;
+                    rearDifferential.lockStrenght = rearDifferentialLock;
+
+                    centerDifferential = new CenterDifferential();
+                    centerDifferential.frontDifferential = frontDifferential;
+                    centerDifferential.rearDifferential = rearDifferential;
+                    centerDifferential.lockStrenght = centerDifferentialLock;
+                    updatedDifferential = centerDifferential;
+                    break;
+
+            }
 
             //Setting up tyres
             frontAxle.SetTyreModel(frontTyreModel);
@@ -124,16 +163,35 @@ namespace CarTemplate
             // RPM path:    differential ==> gearbox ==> clutch ==> engine
             // Torque path: differential <== gearbox <== clutch <== engine
 
-            engine.torqueOutputDriveTrain = clutch;
             engine.rpmOutputDriveTrain = clutch;
+            engine.torqueOutputDriveTrain = clutch;
 
-            clutch.torqueOutputDriveTrain = gearbox;
             clutch.rpmOutputDriveTrain = engine;
+            clutch.torqueOutputDriveTrain = gearbox;
 
-            gearbox.torqueOutputDriveTrain = differential;
             gearbox.rpmOutputDriveTrain = clutch;
 
-            differential.rpmOutputDriveTrain = gearbox;
+            //Set up which differential connects with the gearbox depending on driven axle
+            switch (drivenAxle)
+            {
+                case DrivenAxle.front:
+                    gearbox.torqueOutputDriveTrain = frontDifferential;
+                    frontDifferential.rpmOutputDriveTrain = gearbox;
+                    break;
+
+                case DrivenAxle.rear:
+                    gearbox.torqueOutputDriveTrain = rearDifferential;
+                    rearDifferential.rpmOutputDriveTrain = gearbox;
+                    break;
+
+                case DrivenAxle.all:
+                    gearbox.torqueOutputDriveTrain = centerDifferential;
+                    centerDifferential.rpmOutputDriveTrain = gearbox;
+                    rearDifferential.rpmOutputDriveTrain = centerDifferential;
+                    frontDifferential.rpmOutputDriveTrain = centerDifferential;
+                    break;
+            }
+
         }
 
         // Update is called once per frame
@@ -142,7 +200,7 @@ namespace CarTemplate
 
             //Some parts needs to be updated every frame to gather info.
             //(Wheel rpm, suspension compression...)
-            differential.Update();
+            updatedDifferential.Update();
             frontAntiRollBar.Update();
             rearAntiRollBar.Update();
 
