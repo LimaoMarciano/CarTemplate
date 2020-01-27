@@ -15,5 +15,5 @@ MonoBehaviour:
   suspensionDistance: 0.2
   targetPosition: 0.5
   springForce: 16000
-  damper: 1900
+  damper: 2100
   ForceAppPointDistance: 0.27

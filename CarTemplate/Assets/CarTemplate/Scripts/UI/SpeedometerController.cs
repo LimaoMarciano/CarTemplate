@@ -14,6 +14,7 @@ public class SpeedometerController : MonoBehaviour
     {
         speedometer = GetComponent<Speedometer>();
         speedometer.maxRpm = car.engine.data.maxRpm;
+        speedometer.redlineRpm = car.engine.data.redline;
     }
 
     // Update is called once per frame

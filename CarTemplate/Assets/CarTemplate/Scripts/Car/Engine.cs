@@ -24,7 +24,7 @@ namespace CarTemplate
         /// <summary>
         /// How fast the engine respond to changes. Used to give a quick or sluggish feel to engine.
         /// </summary>
-        private float engineResponse = 0.3f;
+        private float engineResponse = 0.6f;
 
         private float smoothDampVelocity = 0f;
 
@@ -49,20 +49,23 @@ namespace CarTemplate
 
             float targetRpm;
 
-            if (engineRpm > (data.maxRpm - 100))
+            if (engineRpm > (data.cutoffRpm))
             {
                 acceleratorInput = 0f;
             }
-            
+
             targetRpm = Mathf.Lerp(inputRpm.rpm, data.maxRpm * acceleratorInput, inputRpm.connectionSlip);
-            engineRpm = Mathf.SmoothDamp(engineRpm, targetRpm, ref smoothDampVelocity, engineResponse);
+            float responseDelay = Mathf.Lerp(0, engineResponse, inputRpm.connectionSlip);
+
+            engineRpm = Mathf.SmoothDamp(engineRpm, targetRpm, ref smoothDampVelocity, responseDelay);
 
             if (acceleratorInput > 0f)
             {
                 outputTorque.torque = GetTorqueFromRpm(engineRpm) * acceleratorInput;
             } else
             {
-                outputTorque.torque = -data.engineBrakeCoefficient * Mathf.Clamp(engineRpm, -data.maxRpm, data.maxRpm) / 60;
+                //outputTorque.torque = -data.engineBrakeCoefficient * Mathf.Clamp(engineRpm, -data.maxRpm, data.maxRpm) / 60;
+                outputTorque.torque = -data.engineBrakeCoefficient * engineRpm / 60;
             }
             
             if (torqueOutputDriveTrain != null)

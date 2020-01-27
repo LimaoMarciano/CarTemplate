@@ -18,12 +18,12 @@ MonoBehaviour:
   forwardFriction:
     extremumSlip: 0.4
     extremumValue: 0.6
-    asymptoteSlip: 0.8
-    asymptoteValue: 0.3
+    asymptoteSlip: 1
+    asymptoteValue: 0.4
     stiffness: 1
   sidewaysFriction:
     extremumSlip: 0.4
     extremumValue: 0.6
-    asymptoteSlip: 0.8
-    asymptoteValue: 0.3
+    asymptoteSlip: 1
+    asymptoteValue: 0.4
     stiffness: 1

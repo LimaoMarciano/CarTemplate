@@ -31,7 +31,8 @@ namespace CarTemplate
             {
                 outputRpm.connectionSlip = inputRpm.connectionSlip;
             }
-            
+
+            clutchInput = Mathf.Clamp01(clutchInput);
             float rpmDifference = inputRpm.rpm - outputRpm.rpm;
             outputRpm.rpm += rpmDifference * grip * (1f - clutchInput) * Time.deltaTime;
 
