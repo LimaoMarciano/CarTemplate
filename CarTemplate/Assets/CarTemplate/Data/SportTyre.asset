@@ -16,14 +16,14 @@ MonoBehaviour:
   radius: 0.29
   mass: 20
   forwardFriction:
-    extremumSlip: 0.15
+    extremumSlip: 0.2
     extremumValue: 0.9
     asymptoteSlip: 1
     asymptoteValue: 0.6
     stiffness: 1
   sidewaysFriction:
     extremumSlip: 0.2
-    extremumValue: 0.9
+    extremumValue: 0.8
     asymptoteSlip: 1
     asymptoteValue: 0.6
     stiffness: 1
