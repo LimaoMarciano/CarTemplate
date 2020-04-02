@@ -13,8 +13,12 @@ namespace CarTemplate
     [Serializable]
     public class Axle
     {
-        public WheelCollider leftWheel;
-        public WheelCollider rightWheel;
+
+        public Wheel leftWheel;
+        public Wheel rightWheel;
+
+        //public WheelCollider leftWheel;
+        //public WheelCollider rightWheel;
 
         //Public getters
         //================================================================================================================
@@ -22,29 +26,29 @@ namespace CarTemplate
         /// <summary>
         /// Left wheel collision info
         /// </summary>
-        public WheelInfo LeftWheelInfo
-        {
-            get { return GetWheelInfo(leftWheel); }
-        }
+        //public WheelInfo LeftWheelInfo
+        //{
+        //    get { return GetWheelInfo(leftWheel); }
+        //}
 
         /// <summary>
         /// Right wheel collision info
         /// </summary>
-        public WheelInfo RightWheelInfo
-        {
-            get { return GetWheelInfo(rightWheel); }
-        }
+        //public WheelInfo RightWheelInfo
+        //{
+        //    get { return GetWheelInfo(rightWheel); }
+        //}
 
         /// <summary>
         /// Wheel collision information. (forward and sideway slip, force on contact and detected physics material)
         /// </summary>
-        public struct WheelInfo
-        {
-            public float sidewaySlip;
-            public float forwardSlip;
-            public float forceOnContact;
-            public PhysicMaterial contactMaterial;
-        }
+        //public class WheelInfo
+        //{
+        //    public float sidewaySlip;
+        //    public float forwardSlip;
+        //    public float forceOnContact;
+        //    public PhysicMaterial contactMaterial;
+        //}
         
 
         //Methods
@@ -56,7 +60,7 @@ namespace CarTemplate
         /// <returns></returns>
         public Vector3 GetAxleMidPoint ()
         {
-            Vector3 track = (leftWheel.transform.position + rightWheel.transform.position) / 2;
+            Vector3 track = (leftWheel.collider.transform.position + rightWheel.collider.transform.position) / 2;
             return track;
         }
 
@@ -66,7 +70,7 @@ namespace CarTemplate
         /// <returns></returns>
         public float GetAxleTrack ()
         {
-            return Vector3.Distance(leftWheel.transform.position, rightWheel.transform.position);
+            return Vector3.Distance(leftWheel.collider.transform.position, rightWheel.collider.transform.position);
         }
 
         /// <summary>
@@ -74,28 +78,28 @@ namespace CarTemplate
         /// </summary>
         /// <param name="wheel"></param>
         /// <returns>Returns a struct with wheel collision hit info</returns>
-        private WheelInfo GetWheelInfo (WheelCollider wheel)
-        {
-            WheelInfo wheelInfo;
-            WheelHit hit = new WheelHit();
+        //private WheelInfo GetWheelInfo (WheelCollider wheel)
+        //{
+        //    WheelInfo wheelInfo = new WheelInfo();
+        //    WheelHit hit = new WheelHit();
 
-            if (wheel.GetGroundHit(out hit))
-            {
-                wheelInfo.forwardSlip = hit.forwardSlip;
-                wheelInfo.sidewaySlip = hit.sidewaysSlip;
-                wheelInfo.forceOnContact = hit.force;
-                wheelInfo.contactMaterial = hit.collider.sharedMaterial;
-            }
-            else
-            {
-                wheelInfo.forwardSlip = 0;
-                wheelInfo.sidewaySlip = 0;
-                wheelInfo.forceOnContact = 0;
-                wheelInfo.contactMaterial = null;
-            }
+        //    if (wheel.GetGroundHit(out hit))
+        //    {
+        //        wheelInfo.forwardSlip = hit.forwardSlip;
+        //        wheelInfo.sidewaySlip = hit.sidewaysSlip;
+        //        wheelInfo.forceOnContact = hit.force;
+        //        wheelInfo.contactMaterial = hit.collider.sharedMaterial;
+        //    }
+        //    else
+        //    {
+        //        wheelInfo.forwardSlip = 0;
+        //        wheelInfo.sidewaySlip = 0;
+        //        wheelInfo.forceOnContact = 0;
+        //        wheelInfo.contactMaterial = null;
+        //    }
 
-            return wheelInfo;
-        }
+        //    return wheelInfo;
+        //}
 
         /// <summary>
         /// Applies tyre data on the axle's wheels
@@ -103,15 +107,15 @@ namespace CarTemplate
         /// <param name="model">Data assets with wheel parameters</param>
         public void SetTyreModel (TyreModel model)
         {
-            leftWheel.forwardFriction = CreateFrictionCurve(model.forwardFriction);
-            leftWheel.sidewaysFriction = CreateFrictionCurve(model.sidewaysFriction);
-            leftWheel.mass = model.mass;
-            leftWheel.radius = model.radius;
+            leftWheel.collider.forwardFriction = CreateFrictionCurve(model.forwardFriction);
+            leftWheel.collider.sidewaysFriction = CreateFrictionCurve(model.sidewaysFriction);
+            leftWheel.collider.mass = model.mass;
+            leftWheel.collider.radius = model.radius;
 
-            rightWheel.forwardFriction = CreateFrictionCurve(model.forwardFriction);
-            rightWheel.sidewaysFriction = CreateFrictionCurve(model.sidewaysFriction);
-            rightWheel.mass = model.mass;
-            rightWheel.radius = model.radius;
+            rightWheel.collider.forwardFriction = CreateFrictionCurve(model.forwardFriction);
+            rightWheel.collider.sidewaysFriction = CreateFrictionCurve(model.sidewaysFriction);
+            rightWheel.collider.mass = model.mass;
+            rightWheel.collider.radius = model.radius;
         }
 
         /// <summary>
@@ -126,11 +130,11 @@ namespace CarTemplate
             suspensionSpring.damper = model.damper;
             suspensionSpring.targetPosition = model.targetPosition;
 
-            leftWheel.suspensionSpring = suspensionSpring;
-            leftWheel.suspensionDistance = model.suspensionDistance;
+            leftWheel.collider.suspensionSpring = suspensionSpring;
+            leftWheel.collider.suspensionDistance = model.suspensionDistance;
 
-            rightWheel.suspensionSpring = suspensionSpring;
-            rightWheel.suspensionDistance = model.suspensionDistance;
+            rightWheel.collider.suspensionSpring = suspensionSpring;
+            rightWheel.collider.suspensionDistance = model.suspensionDistance;
         }
 
         /// <summary>

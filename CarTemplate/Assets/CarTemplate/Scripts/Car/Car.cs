@@ -82,7 +82,7 @@ namespace CarTemplate
             
             //How many substeps per fixed update the vehicles will use.
             //This is a global value that affects all vehicles on scene
-            frontAxle.leftWheel.ConfigureVehicleSubsteps(5, 5, 5);
+            frontAxle.leftWheel.collider.ConfigureVehicleSubsteps(5, 5, 5);
             
             //Setting up rigidbody
             rb = GetComponent<Rigidbody>();

@@ -8,36 +8,46 @@ public class AxleDebug : MonoBehaviour
 {
     public Car car;
 
-    public WheelInfoDebug FLWheel;
-    public WheelInfoDebug FRWheel;
-    public WheelInfoDebug RLWheel;
-    public WheelInfoDebug RRWheel;
+    public WheelInfoDebug FLWheelDebug;
+    public WheelInfoDebug FRWheelDebug;
+    public WheelInfoDebug RLWheelDebug;
+    public WheelInfoDebug RRWheelDebug;
+
+    private void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
     {
 
-        Axle.WheelInfo FLWheelInfo = car.frontAxle.LeftWheelInfo;
-        Axle.WheelInfo FRWheelInfo = car.frontAxle.RightWheelInfo;
+        Wheel FLWheel = car.frontAxle.leftWheel;
+        Wheel FRWheel = car.frontAxle.rightWheel;
+        Wheel RLWheel = car.rearAxle.leftWheel;
+        Wheel RRWheel = car.rearAxle.rightWheel;
 
-        Axle.WheelInfo RLWheelInfo = car.rearAxle.LeftWheelInfo;
-        Axle.WheelInfo RRWheelInfo = car.rearAxle.RightWheelInfo;
+        //Axle.WheelInfo FLWheelInfo = car.frontAxle.LeftWheelInfo;
+        //Axle.WheelInfo FRWheelInfo = car.frontAxle.RightWheelInfo;
 
-        FLWheel.force = FLWheelInfo.forceOnContact;
-        FLWheel.sideSlip = FLWheelInfo.sidewaySlip;
-        FLWheel.forwardSlip = FLWheelInfo.forwardSlip;
+        //Axle.WheelInfo RLWheelInfo = car.rearAxle.LeftWheelInfo;
+        //Axle.WheelInfo RRWheelInfo = car.rearAxle.RightWheelInfo;
 
-        FRWheel.force = FRWheelInfo.forceOnContact;
-        FRWheel.sideSlip = FRWheelInfo.sidewaySlip;
-        FRWheel.forwardSlip = FRWheelInfo.forwardSlip;
+        FLWheelDebug.force = FLWheel.collisionInfo.forceOnContact;
+        FLWheelDebug.sideSlip = FLWheel.collisionInfo.sidewaySlip;
+        FLWheelDebug.forwardSlip = FLWheel.collisionInfo.forwardSlip;
 
-        RLWheel.force = RLWheelInfo.forceOnContact;
-        RLWheel.sideSlip = RLWheelInfo.sidewaySlip;
-        RLWheel.forwardSlip = RLWheelInfo.forwardSlip;
+        FRWheelDebug.force = FRWheel.collisionInfo.forceOnContact;
+        FRWheelDebug.sideSlip = FRWheel.collisionInfo.sidewaySlip;
+        FRWheelDebug.forwardSlip = FRWheel.collisionInfo.forwardSlip;
 
-        RRWheel.force = RRWheelInfo.forceOnContact;
-        RRWheel.sideSlip = RRWheelInfo.sidewaySlip;
-        RRWheel.forwardSlip = RRWheelInfo.forwardSlip;
+        RLWheelDebug.force = RLWheel.collisionInfo.forceOnContact;
+        RLWheelDebug.sideSlip = RLWheel.collisionInfo.sidewaySlip;
+        RLWheelDebug.forwardSlip = RLWheel.collisionInfo.forwardSlip;
+
+        RRWheelDebug.force = RRWheel.collisionInfo.forceOnContact;
+        RRWheelDebug.sideSlip = RRWheel.collisionInfo.sidewaySlip;
+        RRWheelDebug.forwardSlip = RRWheel.collisionInfo.forwardSlip;
 
 
     }

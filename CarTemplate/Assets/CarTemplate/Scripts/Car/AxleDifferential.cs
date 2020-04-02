@@ -63,8 +63,8 @@ namespace CarTemplate
 
             if (axle != null && axle.leftWheel != null && axle.rightWheel != null)
             {
-                outputRpm.rpm = (axle.rightWheel.rpm + axle.leftWheel.rpm) / 2f;
-                speed = CalculateSpeed(outputRpm.rpm, axle.rightWheel.radius);
+                outputRpm.rpm = (axle.rightWheel.collider.rpm + axle.leftWheel.collider.rpm) / 2f;
+                speed = CalculateSpeed(outputRpm.rpm, axle.rightWheel.collider.radius);
             }
             else
             {
@@ -92,12 +92,12 @@ namespace CarTemplate
                 
                 //Calculate rpm difference between the two wheels
                 //Negative values means that right wheel is faster than left
-                float leftWheelRpm = axle.leftWheel.rpm;
-                float rightWheelRpm = axle.rightWheel.rpm;
+                float leftWheelRpm = axle.leftWheel.collider.rpm;
+                float rightWheelRpm = axle.rightWheel.collider.rpm;
 
                 torqueSplit = CalculateTorqueSplit(rightWheelRpm, leftWheelRpm);
-                axle.leftWheel.motorTorque = inputTorque.torque * torqueSplit;
-                axle.rightWheel.motorTorque = inputTorque.torque * (1 - torqueSplit);
+                axle.leftWheel.collider.motorTorque = inputTorque.torque * torqueSplit;
+                axle.rightWheel.collider.motorTorque = inputTorque.torque * (1 - torqueSplit);
 
                 //if (leftWheelRpm != 0 || rightWheelRpm != 0)
                 //{

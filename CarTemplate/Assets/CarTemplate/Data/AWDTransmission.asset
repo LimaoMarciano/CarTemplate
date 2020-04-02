@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def056b7264ba1748b51d9334db8e4f6, type: 3}
+  m_Name: AWDTransmission
+  m_EditorClassIdentifier: 
+  gearRatios:
+  - 3.5
+  - 2.4
+  - 1.8
+  - 1.4
+  - 1
+  reverseGearRatio: 2.3
+  finalGear: 3.3

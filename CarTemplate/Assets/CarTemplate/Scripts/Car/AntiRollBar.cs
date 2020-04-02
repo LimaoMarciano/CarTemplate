@@ -25,16 +25,16 @@ namespace CarTemplate
             if (axle != null && axle.leftWheel != null && axle.rightWheel != null)
             {
 
-                bool groundedL = axle.leftWheel.GetGroundHit(out hit);
+                bool groundedL = axle.leftWheel.collider.GetGroundHit(out hit);
                 if (groundedL)
                 {
-                    travelL = (-axle.leftWheel.transform.InverseTransformPoint(hit.point).y - axle.leftWheel.radius) / axle.leftWheel.suspensionDistance;
+                    travelL = (-axle.leftWheel.collider.transform.InverseTransformPoint(hit.point).y - axle.leftWheel.collider.radius) / axle.leftWheel.collider.suspensionDistance;
                 }
 
-                bool groundedR = axle.rightWheel.GetGroundHit(out hit);
+                bool groundedR = axle.rightWheel.collider.GetGroundHit(out hit);
                 if (groundedR)
                 {
-                    travelR = (-axle.rightWheel.transform.InverseTransformPoint(hit.point).y - axle.rightWheel.radius) / axle.rightWheel.suspensionDistance;
+                    travelR = (-axle.rightWheel.collider.transform.InverseTransformPoint(hit.point).y - axle.rightWheel.collider.radius) / axle.rightWheel.collider.suspensionDistance;
                 }
 
                 float antiRollForce = (travelL - travelR) * strength;
@@ -44,12 +44,12 @@ namespace CarTemplate
 
                     if (groundedL)
                     {
-                        rb.AddForceAtPosition(axle.leftWheel.transform.up * -antiRollForce, axle.leftWheel.transform.position);
+                        rb.AddForceAtPosition(axle.leftWheel.collider.transform.up * -antiRollForce, axle.leftWheel.collider.transform.position);
                     }
 
                     if (groundedR)
                     {
-                        rb.AddForceAtPosition(axle.rightWheel.transform.up * antiRollForce, axle.rightWheel.transform.position);
+                        rb.AddForceAtPosition(axle.rightWheel.collider.transform.up * antiRollForce, axle.rightWheel.collider.transform.position);
                     }
 
                 }

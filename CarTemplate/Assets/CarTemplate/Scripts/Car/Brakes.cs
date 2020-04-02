@@ -56,10 +56,10 @@ namespace CarTemplate
             float frontPower = (data.frontBrakePower * brakeBias * brakeInput);
             float rearPower = (data.rearBrakePower * (1 - brakeBias) * brakeInput) + (data.handbrakePower * handbrakeInput);
 
-            frontAxle.leftWheel.brakeTorque = frontPower;
-            frontAxle.rightWheel.brakeTorque = frontPower;
-            rearAxle.leftWheel.brakeTorque = rearPower;
-            rearAxle.rightWheel.brakeTorque = rearPower;
+            frontAxle.leftWheel.collider.brakeTorque = frontPower;
+            frontAxle.rightWheel.collider.brakeTorque = frontPower;
+            rearAxle.leftWheel.collider.brakeTorque = rearPower;
+            rearAxle.rightWheel.collider.brakeTorque = rearPower;
         }
 
     }

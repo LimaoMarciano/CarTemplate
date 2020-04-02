@@ -73,8 +73,8 @@ namespace CarTemplate
                     ackermannAngleRight = 0f;
                 }
 
-                axle.leftWheel.steerAngle = ackermannAngleLeft;
-                axle.rightWheel.steerAngle = ackermannAngleRight;
+                axle.leftWheel.collider.steerAngle = ackermannAngleLeft;
+                axle.rightWheel.collider.steerAngle = ackermannAngleRight;
 
             }
             else
