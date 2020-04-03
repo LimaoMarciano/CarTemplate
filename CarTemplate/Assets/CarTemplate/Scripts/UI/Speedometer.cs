@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 using UnityEngine.UI;
 
 public class Speedometer : MonoBehaviour {
@@ -18,17 +19,21 @@ public class Speedometer : MonoBehaviour {
 
 	private float range;
 
+    private StringBuilder speedString;
+    private const string speedUnit = "<size=24> km/h</size>";
+
 	// Use this for initialization
 	void Start () {
 		range = maxNeedle - minNeedle;
 		redline.fillAmount = 0.665f - ((redlineRpm * 0.665f) / maxRpm);
+        speedString = new StringBuilder("0", 4);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
         float speedKmh = Mathf.Abs(currentSpeed) * 3.6f;
-		speedText.text = speedKmh.ToString("F0") + "<size=24> km/h</size>";
+        speedText.text = speedKmh.ToString("F0") + "<size=24> km/h</size>";
 
 		if (currentGear >= 0) {
 			gear.text = (currentGear + 1).ToString ();

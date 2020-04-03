@@ -1906,6 +1906,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 66cc0695b70c4b14090a8008f8dc6d00,
         type: 2}
+    - target: {fileID: 3526829519393000145, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: turnRadius
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 480347063106599109, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1963,8 +1968,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
       propertyPath: changeGearSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[1].time
+      value: 0.8367703
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[1].value
+      value: 0.49112344
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[1].inSlope
+      value: 1.7411034
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[1].outSlope
+      value: 1.7411034
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[1].inWeight
+      value: 0.055432048
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[1].outWeight
+      value: 0.26075137
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[2].inSlope
+      value: 4.311628
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[2].outSlope
+      value: 4.311628
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[0].inSlope
+      value: 0.07426737
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[0].outSlope
+      value: 0.07426737
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[0].outWeight
+      value: 0.09660399
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: steeringFilter.m_Curve.Array.data[2].inWeight
+      value: 0.12794705
       objectReference: {fileID: 0}
     - target: {fileID: 6791897617383321205, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
@@ -2643,7 +2723,7 @@ PrefabInstance:
     - target: {fileID: 4526250734785094881, guid: bb26b34149a7a4941b4c7c3064244222,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 134.45
+      value: 93.7
       objectReference: {fileID: 0}
     - target: {fileID: 4526250734785094881, guid: bb26b34149a7a4941b4c7c3064244222,
         type: 3}

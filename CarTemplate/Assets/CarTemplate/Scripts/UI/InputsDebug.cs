@@ -9,6 +9,7 @@ public class InputsDebug : MonoBehaviour
     public Fillbar accelerator;
     public Fillbar brakes;
     public Fillbar clutch;
+    public WheelRotationUI wheel;
     
     // Start is called before the first frame update
     void Start()
@@ -24,5 +25,6 @@ public class InputsDebug : MonoBehaviour
         accelerator.value = car.engine.acceleratorInput;
         brakes.value = car.brakes.BrakeInput;
         clutch.value = car.clutch.clutchInput;
+        wheel.input = car.steering.SteeringInput;
     }
 }
