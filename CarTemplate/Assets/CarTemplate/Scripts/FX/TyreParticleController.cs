@@ -45,7 +45,6 @@ public class TyreParticleController : MonoBehaviour
     void Update()
     {
         var emission = tyreParticle.emission;
-        Debug.Log(wheel.collisionInfo.forwardSlip);
 
         float fSlip = Mathf.Abs(wheel.collisionInfo.forwardSlip);
         float sSlip = Mathf.Abs(wheel.collisionInfo.sidewaySlip);

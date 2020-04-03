@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/CarTemplate/Scenes/TestTrack_v2.unity
+    guid: 46e962c88faff034eb4f4eda1772d42a
   m_configObjects: {}

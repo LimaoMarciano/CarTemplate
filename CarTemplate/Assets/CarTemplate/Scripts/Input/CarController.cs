@@ -37,7 +37,7 @@ public class CarController : MonoBehaviour
         
         float handbrakeInput = 0f;
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("UpShift"))
         {
             
             StopCoroutine(gearCO);
@@ -59,7 +59,7 @@ public class CarController : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("Fire3"))
+        if (Input.GetButtonDown("DownShift"))
         {
 
             StopCoroutine(gearCO);
@@ -70,7 +70,7 @@ public class CarController : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButton("Handbrake"))
         {
             handbrakeInput = 1f;
         }
@@ -79,31 +79,31 @@ public class CarController : MonoBehaviour
         {
             if (useFilteredAccelerator)
             {
-                car.engine.acceleratorInput = GetFilteredAcceleratorInput(Input.GetAxis("RightTrigger"));
+                car.engine.acceleratorInput = GetFilteredAcceleratorInput(Input.GetAxis("Accelerator"));
             }
             else
             {
-                car.engine.acceleratorInput = Input.GetAxis("RightTrigger");
+                car.engine.acceleratorInput = Input.GetAxis("Accelerator");
             }
         }
 
         if (useFilteredSteering)
         {
-            car.steering.SetSteeringInput(GetFilteredSteerInput(Input.GetAxis("Horizontal")));
+            car.steering.SetSteeringInput(GetFilteredSteerInput(Input.GetAxis("Steering")));
         }
         else
         {
-            car.steering.SetSteeringInput(Input.GetAxis("Horizontal"));
+            car.steering.SetSteeringInput(Input.GetAxis("Steering"));
         }
 
         if (useFilteredBrakes)
         {
-            float filteredInput = GetFilteredBrakeInput(Input.GetAxis("LeftTrigger"));
+            float filteredInput = GetFilteredBrakeInput(Input.GetAxis("Brakes"));
             car.brakes.ApplyPressure(filteredInput, handbrakeInput);
         }
         else
         {
-            car.brakes.ApplyPressure(Input.GetAxis("LeftTrigger"), handbrakeInput);
+            car.brakes.ApplyPressure(Input.GetAxis("Brakes"), handbrakeInput);
         }
         
     }
