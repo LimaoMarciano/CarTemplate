@@ -23,7 +23,7 @@ public class InputsDebug : MonoBehaviour
     void Update()
     {
         accelerator.value = car.engine.acceleratorInput;
-        brakes.value = car.brakes.BrakeInput;
+        brakes.value = car.brakes.brakeInput;
         clutch.value = car.clutch.clutchInput;
         wheel.input = car.steering.SteeringInput;
     }

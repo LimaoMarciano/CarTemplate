@@ -2046,6 +2046,21 @@ PrefabInstance:
       propertyPath: steeringFilter.m_Curve.Array.data[2].inWeight
       value: 0.12794705
       objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: isAbsEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: absSlipLimit
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526829519393000144, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: absBrakeChange
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6791897617383321205, guid: 101286a117888624a8f2a72d16eed3fb,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
@@ -2139,6 +2154,11 @@ PrefabInstance:
     - target: {fileID: 208367520, guid: 101286a117888624a8f2a72d16eed3fb, type: 3}
       propertyPath: sideSlipLimit
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886473582665398310, guid: 101286a117888624a8f2a72d16eed3fb,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101286a117888624a8f2a72d16eed3fb, type: 3}

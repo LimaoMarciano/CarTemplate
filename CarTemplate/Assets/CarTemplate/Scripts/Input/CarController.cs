@@ -16,10 +16,18 @@ public class CarController : MonoBehaviour
     public bool useFilteredAccelerator = false;
     public bool useFilteredBrakes = false;
     public bool useFilteredSteering = false;
+
+    [Header("Assists")]
+    public bool isAbsEnabled = false;
+    public float absSlipLimit = 0.5f;
+    public float absRefreshTime = 0.06f;
+    public float absBrakeChange = 0.05f;
+
     bool isAcceleratorEnabled = true;
 
     private float clutchDownSpeed;
     private float clutchUpSpeed;
+    private AntiLockBrakeController abs;
 
     private IEnumerator gearCO;
 
@@ -29,6 +37,9 @@ public class CarController : MonoBehaviour
         gearCO = UpChangeGear();
 
         clutchDownSpeed = changeGearSpeed;
+
+        abs = new AntiLockBrakeController(absSlipLimit, absRefreshTime, absBrakeChange);
+        abs.Init(car);
     }
 
     // Update is called once per frame
@@ -37,6 +48,7 @@ public class CarController : MonoBehaviour
         
         float handbrakeInput = 0f;
 
+        //Changing gear
         if (Input.GetButtonDown("UpShift"))
         {
             
@@ -70,11 +82,7 @@ public class CarController : MonoBehaviour
 
         }
 
-        if (Input.GetButton("Handbrake"))
-        {
-            handbrakeInput = 1f;
-        }
-
+        //Accelerator
         if (isAcceleratorEnabled)
         {
             if (useFilteredAccelerator)
@@ -87,6 +95,7 @@ public class CarController : MonoBehaviour
             }
         }
 
+        //Steering
         if (useFilteredSteering)
         {
             car.steering.SetSteeringInput(GetFilteredSteerInput(Input.GetAxis("Steering")));
@@ -96,14 +105,42 @@ public class CarController : MonoBehaviour
             car.steering.SetSteeringInput(Input.GetAxis("Steering"));
         }
 
+        //Handbrake
+        if (Input.GetButton("Handbrake"))
+        {
+            handbrakeInput = 1f;
+        }
+
+        //Braking
         if (useFilteredBrakes)
         {
             float filteredInput = GetFilteredBrakeInput(Input.GetAxis("Brakes"));
-            car.brakes.ApplyPressure(filteredInput, handbrakeInput);
+            if (isAbsEnabled)
+            {
+                abs.Update(filteredInput, handbrakeInput);
+
+                //Setting brake input without ApplyPressure just to keep brake UI working
+                car.brakes.brakeInput = abs.AverageBrakeInput;
+            }
+            else
+            {
+                car.brakes.ApplyPressure(filteredInput, handbrakeInput);
+            }
         }
         else
         {
-            car.brakes.ApplyPressure(Input.GetAxis("Brakes"), handbrakeInput);
+            if (isAbsEnabled)
+            {
+                abs.Update(Input.GetAxis("Brakes"), handbrakeInput);
+
+                //Setting brake input without ApplyPressure just to keep brake UI working
+                car.brakes.brakeInput = abs.AverageBrakeInput;
+            }
+            else
+            {
+                car.brakes.ApplyPressure(Input.GetAxis("Brakes"), handbrakeInput);
+            }
+            
         }
         
     }
