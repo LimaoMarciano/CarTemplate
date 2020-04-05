@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CarTemplate;
 
-public class AntiLockBrake 
+public class AntiLockBrakeSensor 
 {
 
     public float slipLimit = 0.5f;
@@ -24,7 +24,12 @@ public class AntiLockBrake
         get { return isActive; }
     }
 
-    public AntiLockBrake (Wheel wheel, float slipLimit, float refreshTime, float brakeChange)
+    public float AllowedBrakePressure
+    {
+        get { return allowedBrakePressure; }
+    }
+
+    public AntiLockBrakeSensor (Wheel wheel, float slipLimit, float refreshTime, float brakeChange)
     {
         this.wheel = wheel;
         this.slipLimit = slipLimit;
@@ -59,7 +64,7 @@ public class AntiLockBrake
                     isActive = false;
                 }
 
-                Mathf.Clamp01(allowedBrakePressure);
+                allowedBrakePressure = Mathf.Clamp01(allowedBrakePressure);
                 timer = 0;
 
             }

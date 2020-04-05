@@ -146,7 +146,7 @@ namespace CarTemplate
 
             //Setting up brakes
             brakes.data = brakesData;
-            brakes.brakeBias = brakeBias;
+            brakes.BrakeBias = brakeBias;
             brakes.frontAxle = frontAxle;
             brakes.rearAxle = rearAxle;
 

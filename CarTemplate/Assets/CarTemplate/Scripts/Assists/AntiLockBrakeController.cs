@@ -16,24 +16,38 @@ public class AntiLockBrakeController
     private Wheel RLWheel;
     private Wheel RRWheel;
 
-    private AntiLockBrake FLAbs;
-    private AntiLockBrake FRAbs;
-    private AntiLockBrake RLAbs;
-    private AntiLockBrake RRAbs;
+    private AntiLockBrakeSensor FLAbs;
+    private AntiLockBrakeSensor FRAbs;
+    private AntiLockBrakeSensor RLAbs;
+    private AntiLockBrakeSensor RRAbs;
 
-    private float averageBrakeInput = 0f;
     private bool isAbsActive = false;
-
-    public float AverageBrakeInput
-    {
-        get { return averageBrakeInput; }
-    }
 
     public bool IsAbsActive
     {
         get { return isAbsActive; }
     }
-    
+
+    public AntiLockBrakeSensor FrontLeftAbs
+    {
+        get { return FLAbs; }
+    }
+
+    public AntiLockBrakeSensor FrontRightAbs
+    {
+        get { return FRAbs; }
+    }
+
+    public AntiLockBrakeSensor RearLeftAbs
+    {
+        get { return RLAbs; }
+    }
+
+    public AntiLockBrakeSensor RearRightAbs
+    {
+        get { return RRAbs; }
+    }
+
     public AntiLockBrakeController (float slipLimit, float refreshTime, float brakeChangePerRefresh)
     {
         this.slipLimit = slipLimit;
@@ -50,26 +64,33 @@ public class AntiLockBrakeController
         RLWheel = car.rearAxle.leftWheel;
         RRWheel = car.rearAxle.rightWheel;
 
-        FLAbs = new AntiLockBrake(FLWheel, slipLimit, refreshTime, brakeChangePerRefresh);
-        FRAbs = new AntiLockBrake(FRWheel, slipLimit, refreshTime, brakeChangePerRefresh);
-        RLAbs = new AntiLockBrake(RLWheel, slipLimit, refreshTime, brakeChangePerRefresh);
-        RRAbs = new AntiLockBrake(RRWheel, slipLimit, refreshTime, brakeChangePerRefresh);
+        FLAbs = new AntiLockBrakeSensor(FLWheel, slipLimit, refreshTime, brakeChangePerRefresh);
+        FRAbs = new AntiLockBrakeSensor(FRWheel, slipLimit, refreshTime, brakeChangePerRefresh);
+        RLAbs = new AntiLockBrakeSensor(RLWheel, slipLimit, refreshTime, brakeChangePerRefresh);
+        RRAbs = new AntiLockBrakeSensor(RRWheel, slipLimit, refreshTime, brakeChangePerRefresh);
     }
 
     // Update is called once per frame
-    public void Update(float brakeInput, float handbrakeInput)
+    public void ApplyBrakes(float brakeInput, float handbrakeInput)
     {
+        //float FLBrakeInput = FLAbs.Update(brakeInput);
+        //car.brakes.ApplyPressureToIndividualWheel(CarAxle.front, AxleWheel.left, FLBrakeInput, handbrakeInput);
+
+        //float FRBrakeInput = FRAbs.Update(brakeInput);
+        //car.brakes.ApplyPressureToIndividualWheel(CarAxle.front, AxleWheel.right, FRBrakeInput, handbrakeInput);
+
+        //float RLBrakeInput = RLAbs.Update(brakeInput);
+        //car.brakes.ApplyPressureToIndividualWheel(CarAxle.rear, AxleWheel.left, RLBrakeInput, handbrakeInput);
+
+        //float RRBrakeInput = RRAbs.Update(brakeInput);
+        //car.brakes.ApplyPressureToIndividualWheel(CarAxle.rear, AxleWheel.right, RRBrakeInput, handbrakeInput);
+
         float FLBrakeInput = FLAbs.Update(brakeInput);
-        car.brakes.ApplyPressureToIndividualWheel(CarAxle.front, AxleWheel.left, FLBrakeInput, handbrakeInput);
-
         float FRBrakeInput = FRAbs.Update(brakeInput);
-        car.brakes.ApplyPressureToIndividualWheel(CarAxle.front, AxleWheel.right, FRBrakeInput, handbrakeInput);
-
         float RLBrakeInput = RLAbs.Update(brakeInput);
-        car.brakes.ApplyPressureToIndividualWheel(CarAxle.rear, AxleWheel.left, RLBrakeInput, handbrakeInput);
-
         float RRBrakeInput = RRAbs.Update(brakeInput);
-        car.brakes.ApplyPressureToIndividualWheel(CarAxle.rear, AxleWheel.right, RRBrakeInput, handbrakeInput);
+
+        car.brakes.ApplyPressure(FLBrakeInput, FRBrakeInput, RLBrakeInput, RRBrakeInput, handbrakeInput);
 
         if (FLAbs.IsActive == true || FRAbs.IsActive == true || RLAbs.IsActive == true || RRAbs.IsActive == true)
         {
@@ -79,8 +100,6 @@ public class AntiLockBrakeController
         {
             isAbsActive = false;
         }
-
-        averageBrakeInput = (FLBrakeInput + FRBrakeInput + RLBrakeInput + RRBrakeInput) / 4f;
 
     }
 }

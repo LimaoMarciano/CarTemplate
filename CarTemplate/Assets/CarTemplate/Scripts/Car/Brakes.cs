@@ -5,10 +5,6 @@ using UnityEngine;
 namespace CarTemplate
 {
 
-    public enum CarAxle { front, rear };
-    public enum AxleWheel { left, right };
-
-    
     /// <summary>
     /// Class responsible for brakes and handbreak behaviour. Brakes are applied to all wheels, while handbrake is applied only to rear wheels.
     /// <para>The brake bias variable sets how applied input will be split between front and rear wheels.</para>
@@ -20,15 +16,42 @@ namespace CarTemplate
 
         public BrakesData data;
 
+        private float brakeBias = 0.5f;
+        private float brakeInput = 0f;
+        private float handbrakeInput = 0f;
+
+        private float maxFrontBrakeTorque = 0f;
+        private float maxRearBrakeTorque = 0f;
+
+        private float FLBrakeTorque = 0f;
+        private float FRBrakeTorque = 0f;
+        private float RLBrakeTorque = 0f;
+        private float RRBrakeTorque = 0f;
+        private float handbrakeTorque = 0f;
+
+        #region Public getters and setters  
         /// <summary>
         /// Defines how brake pressure will be split between front and rear wheels. Range between 0 and 1.
         /// <para>0 = 100% rear, 1 = 100% front</para>
         /// </summary>
-        public float brakeBias = 0.5f;
+        public float BrakeBias
+        {
+            get { return brakeBias; }
+            set
+            {
+                brakeBias = value;
+                RefreshBrakeTorqueBiasSplit();
+            }
+        }
 
-        public float brakeInput = 0f;
-        public float handbrakeInput = 0f;
-
+        /// <summary>
+        /// Current brake input. The value is a average of all four brakes.
+        /// </summary>
+        public float BrakeInput
+        {
+            get { return brakeInput; }
+        }
+        
         /// <summary>
         /// Current handbrake input
         /// </summary>
@@ -38,56 +61,121 @@ namespace CarTemplate
         }
 
         /// <summary>
-        /// Apply brake and handbrake pressure on the wheels, respecting the configured brake bias
+        /// Max braking torque on the front accounting for current brake bias.
         /// </summary>
-        /// <param name="brakeValue">Brake input. Value between 0 and 1.</param>
-        /// <param name="handbrakeValue">Handbrake input. Value between 0 and 1</param>
-        public void ApplyPressure (float brakeValue, float handbrakeValue)
+        public float MaxFrontBrakeTorque
         {
-
-            brakeInput = Mathf.Clamp01(brakeValue);
-            handbrakeInput = Mathf.Clamp01(handbrakeValue);
-
-            brakeBias = Mathf.Clamp01(brakeBias);
-
-            float frontPower = (data.frontBrakePower * brakeBias * brakeInput);
-            float rearPower = (data.rearBrakePower * (1 - brakeBias) * brakeInput) + (data.handbrakePower * handbrakeInput);
-
-            frontAxle.leftWheel.collider.brakeTorque = frontPower;
-            frontAxle.rightWheel.collider.brakeTorque = frontPower;
-            rearAxle.leftWheel.collider.brakeTorque = rearPower;
-            rearAxle.rightWheel.collider.brakeTorque = rearPower;
+            get { return maxFrontBrakeTorque; }
         }
 
         /// <summary>
-        /// Applies brake and handbrake pressure on the selected wheel, respecting the configured brake bias
+        /// Max braking torque on the rear accounting for current brake bias.
         /// </summary>
-        /// <param name="axle">Which axle the wheel is in</param>
-        /// <param name="selectedWheel">Which wheel from the selected axle</param>
-        /// <param name="brakeValue">Brake input. Value between 0 and 1.</param>
-        /// <param name="handbrakeValue">Handbrake input. Value between 0 and 1.</param>
-        public void ApplyPressureToIndividualWheel (CarAxle axle, AxleWheel selectedWheel, float brakeValue, float handbrakeValue)
+        public float MaxRearBrakeTorque
         {
-            float brakeInput = Mathf.Clamp01(brakeValue);
-            handbrakeInput = Mathf.Clamp01(handbrakeValue);
+            get { return maxRearBrakeTorque; }
+        }
 
-            brakeBias = Mathf.Clamp01(brakeBias);
+        /// <summary>
+        /// Current braking torque on front left brake
+        /// </summary>
+        public float FrontLeftBrakeTorque
+        {
+            get { return FLBrakeTorque; }
+        }
 
-            Wheel wheel;
+        /// <summary>
+        /// Current braking torque on front right brake
+        /// </summary>
+        public float FrontRightBrakeTorque
+        {
+            get { return FRBrakeTorque; }
+        }
 
-            if (axle == CarAxle.front)
-            {
-                if (selectedWheel == AxleWheel.left) wheel = frontAxle.leftWheel;
-                else wheel = frontAxle.rightWheel;
-                wheel.collider.brakeTorque = data.frontBrakePower * brakeBias * brakeInput;
-            }
-            else
-            {
-                if (selectedWheel == AxleWheel.left) wheel = rearAxle.leftWheel;
-                else wheel = rearAxle.rightWheel;
-                wheel.collider.brakeTorque = (data.rearBrakePower * (1 - brakeBias) * brakeInput) + (data.handbrakePower * handbrakeInput);
-            }
+        /// <summary>
+        /// Current braking torque on rear left brake
+        /// </summary>
+        public float RearLeftBrakeTorque
+        {
+            get { return RLBrakeTorque; }
+        }
 
+        /// <summary>
+        /// Current braking torque on rear right brake
+        /// </summary>
+        public float RearRightBrakeTorque
+        {
+            get { return RRBrakeTorque; }
+        }
+
+        /// <summary>
+        /// Current braking torque applied by handbrake
+        /// </summary>
+        public float HandbrakeBrakeTorque
+        {
+            get { return handbrakeTorque; }
+        }
+
+        #endregion
+
+        #region Public methods
+        /// <summary>
+        /// Apply same brake pressure on all wheels plus handbrake pressure on rear wheels, respecting the configured brake bias.
+        /// </summary>
+        /// <param name="brakeInput">Brake pressure. Value between 0 and 1.</param>
+        /// <param name="handbrakeInput">Handbrake pressure. Value between 0 and 1</param>
+        public void ApplyPressure (float brakeInput, float handbrakeInput)
+        {
+
+            this.brakeInput = Mathf.Clamp01(brakeInput);
+            this.handbrakeInput = Mathf.Clamp01(handbrakeInput);
+
+            FLBrakeTorque = FRBrakeTorque = maxFrontBrakeTorque * this.brakeInput;
+            RLBrakeTorque = RRBrakeTorque = maxRearBrakeTorque * this.BrakeInput;
+            handbrakeTorque = data.handbrakePower * this.handbrakeInput;
+
+            frontAxle.leftWheel.collider.brakeTorque = FLBrakeTorque;
+            frontAxle.rightWheel.collider.brakeTorque = FRBrakeTorque;
+            rearAxle.leftWheel.collider.brakeTorque = RLBrakeTorque + handbrakeTorque;
+            rearAxle.rightWheel.collider.brakeTorque = RRBrakeTorque + handbrakeTorque;
+        }
+
+        /// <summary>
+        /// Apply different brake pressures to each wheel plus handbrake pressure to rear wheels, respecting the configured brake bias
+        /// </summary>
+        /// <param name="FLBrakeInput">Front left brake pressure. Value between 0 and 1.</param>
+        /// <param name="FRBrakeInput">Front right brake pressure. Value between 0 and 1.</param>
+        /// <param name="RLBrakeInput">Rear left brake pressure. Value between 0 and 1.</param>
+        /// <param name="RRBrakeInput">Rear right brake pressure. Value between 0 and 1.</param>
+        /// <param name="handbrakeInput">Handbrake pressure. Value between 0 and 1.</param>
+        public void ApplyPressure (float FLBrakeInput, float FRBrakeInput, float RLBrakeInput, float RRBrakeInput, float handbrakeInput)
+        {
+
+            this.handbrakeInput = Mathf.Clamp01(handbrakeInput);
+            this.brakeInput = (FLBrakeInput + FRBrakeInput + RLBrakeInput + RRBrakeInput) / 4f;
+
+            FLBrakeTorque = maxFrontBrakeTorque * FLBrakeInput;
+            FRBrakeTorque = maxFrontBrakeTorque * FRBrakeInput;
+            RLBrakeTorque = maxRearBrakeTorque * RLBrakeInput;
+            RRBrakeTorque = maxRearBrakeTorque * RRBrakeInput;
+            handbrakeTorque = data.handbrakePower * this.handbrakeInput;
+
+            frontAxle.leftWheel.collider.brakeTorque = FLBrakeTorque;
+            frontAxle.rightWheel.collider.brakeTorque = FRBrakeTorque;
+            rearAxle.leftWheel.collider.brakeTorque = RLBrakeTorque + handbrakeTorque;
+            rearAxle.rightWheel.collider.brakeTorque = RRBrakeTorque + handbrakeTorque;
+
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Recalculate front and rear max brake torque based on current brake bias
+        /// </summary>
+        private void RefreshBrakeTorqueBiasSplit ()
+        {
+            maxFrontBrakeTorque = data.frontBrakeTorque * brakeBias;
+            maxRearBrakeTorque = data.rearBrakeTorque * (1 - brakeBias);
         }
 
     }

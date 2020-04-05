@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     public bool useFilteredSteering = false;
 
     [Header("Assists")]
+    [Header("ABS")]
     public bool isAbsEnabled = false;
     public float absSlipLimit = 0.5f;
     public float absRefreshTime = 0.06f;
@@ -27,9 +28,10 @@ public class CarController : MonoBehaviour
 
     private float clutchDownSpeed;
     private float clutchUpSpeed;
-    private AntiLockBrakeController abs;
+    public AntiLockBrakeController abs;
 
     private IEnumerator gearCO;
+
 
     // Start is called before the first frame update
     void Start()
@@ -117,10 +119,7 @@ public class CarController : MonoBehaviour
             float filteredInput = GetFilteredBrakeInput(Input.GetAxis("Brakes"));
             if (isAbsEnabled)
             {
-                abs.Update(filteredInput, handbrakeInput);
-
-                //Setting brake input without ApplyPressure just to keep brake UI working
-                car.brakes.brakeInput = abs.AverageBrakeInput;
+                abs.ApplyBrakes(filteredInput, handbrakeInput);
             }
             else
             {
@@ -131,10 +130,7 @@ public class CarController : MonoBehaviour
         {
             if (isAbsEnabled)
             {
-                abs.Update(Input.GetAxis("Brakes"), handbrakeInput);
-
-                //Setting brake input without ApplyPressure just to keep brake UI working
-                car.brakes.brakeInput = abs.AverageBrakeInput;
+                abs.ApplyBrakes(Input.GetAxis("Brakes"), handbrakeInput);
             }
             else
             {
